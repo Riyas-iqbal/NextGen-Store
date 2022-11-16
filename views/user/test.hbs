@@ -1,0 +1,59 @@
+<section class="shop spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="row">
+                    {{#each products}}
+                    <div class="col-lg-4 col-md-6 col-sm-6" title="View {{this.name}}">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg" style="cursor:pointer"
+                                onclick="document.location='/product-details?id={{this._id}}'"
+                                style="background-size: 15rem;" data-setbg="/product-image/{{this._id}}.jpg">
+                                {{!-- <ul class="product__hover">
+                                    <li><a href="#"><img style="
+                                            background: #f0f4f7;
+                                            color: white;" src="img/icon/heart.png" alt=""><span>Wishlist</span></a>
+                                    </li>
+                                    <li><a href="#" style="width: 100%;"><img src="img/icon/compare.png" alt="">
+                                            <span>Compare</span></a></li>
+                                    <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
+                                </ul> --}}
+                            </div>
+                            <div class="product__item__text">
+                                <h6 class="text-capitalize">{{this.name}}</h6>
+                                <a href="/add-to-cart/{{this._id}}" title="Add {{this.name}} to Cart" class="add-cart">+
+                                    Add To Cart</a>
+                                {{!-- rating --}}
+                                {{!-- <div class="rating">
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div> --}}
+                                <h6>{{this.ram}}GB Ram | {{this.storage}}GB Storage </h6>
+                                <div class="d-flex justify-content-between">
+                                    <h5 class="priceofproduct">{{this.price}}</h5>
+
+                                    {{#if this.wishlist}}
+                                    <button type="button" style="background: none; border: none; color: rgb(255, 0, 0);"
+                                        class="mr-3" onclick="addToWishlist('{{this._id}}')" title="Add to Wishlist  ">
+                                        <i style="font-size: large;" class="fa-solid fa-heart"></i>
+                                    </button>
+                                    {{else}}
+                                    <button type="button" class="mr-3 wishlist-color" id="wishlistIcon{{this._id}}"
+                                        onclick="addToWishlist('{{this._id}}')" title="Add to Wishlist  ">
+                                        <i style="font-size: large;" class="fa-solid fa-heart"></i>
+                                    </button>
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

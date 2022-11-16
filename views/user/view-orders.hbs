@@ -1,0 +1,310 @@
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="breadcrumb__text">
+          <h4>My Orders</h4>
+          <div class="breadcrumb__links">
+            <a href="/">Home</a>
+            <a href="/profile">Account</a>
+            <span>Orders</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+{{#if order}}
+<div class="container d-flex mt-3 justify-content-between">
+  <div>
+    <button type="button" onclick="showAdvanced()" class="btn font-weight-bold btn-sm"
+      style="background: #007bff; color: white;">Advanced-view</button>
+    <button type="button" onclick="showTable()" class="btn font-weight-bold btn-sm"
+      style="background: #f3f2ee;">Table-view</button>
+  </div>
+  <div>
+    <h6 class="font-weight-bold">
+      You have <span class="text-success">{{totalOrders}}</span> Orders.<br>
+    </h6>
+  </div>
+</div>
+{{/if}}
+
+<section class="container" id="advanced-view">
+
+  <div class="row ">
+
+    <div class="col-md-3">
+
+      <div class="card p-3 mt-3" style="border-radius: 10px;">
+        <div class="text-center">
+          <a href="/"><img src="/images/nextgen logo black.svg" alt=""></a>
+        </div>
+        <div class="d-flex flex-column align-items-center text-center p-3 py-3"><img class="rounded-circle"
+            width="150px"
+            src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span
+            class="font-weight-bold">{{user.name}}</span><span class="text-black-50">{{user.username}}</span><span>
+          </span>
+        </div>
+
+        <div>
+          <a href="/view-address" type="button" style="width: 100%;"
+            class="text-white btn p-2 badge btn-primary">Profile
+            <i class="fa-solid fa-user"></i></a>
+        </div>
+
+        <div class="d-flex justify-content-center mt-2 ">
+          <a href="/cart" type="button" style="width: 100%;" class="text-white btn p-2 badge btn-primary">Cart
+            <i class="fa-solid fa-cart-shopping"></i></a>
+        </div>
+
+        <div class="d-flex justify-content-center mt-2 ">
+          <a href="/view-orders" type="button" style="width: 100%;" class="text-white btn p-2 badge btn-primary">My
+            Orders
+            <i class="fa-solid fa-list-check"></i></a>
+        </div>
+
+        {{#if order}}
+        <div class="text-center mt-3">
+          <h6 class="text-secondary font-weight-bold">
+            We're honoured that when it comes to technology, You think of us
+          </h6>
+        </div>
+        {{/if}}
+
+      </div>
+
+      {{#if order}}
+      <div class="card p-3 mt-3" style="border-radius: 10px;">
+
+        <div class="text-center mt-3">
+          <h4 class="font-weight-bold">
+            Total Spent
+          </h4>
+        </div>
+
+        <div class="text-center mt-1">
+          <h3 class="text-info font-weight-bold format-price">
+            {{totalSpent}}
+          </h3>
+        </div>
+
+        <hr>
+
+        <div class="text-center mt-1">
+          <h4 class="font-weight-bold">
+            Products Ordered
+          </h4>
+        </div>
+
+        <div class="text-center mt-1">
+          <h3 class="text-info font-weight-bold">
+            {{UserTotalOrder}}
+          </h3>
+        </div>
+
+      </div>
+      {{/if}}
+
+    </div>
+
+    {{!-- My Orders User Section Start --}}
+    <div class="col-md-9">
+
+      {{!-- custom table Start --}}
+
+      {{!-- table row head start --}}
+      <div class="card  mt-3" style="border-radius: 10px; ">
+        <div class="card-body row">
+          <div class="col-md-2 d-flex justify-content-center ">
+            <span class="font-weight-bold text-secondary">Order No.</span>
+          </div>
+          <div class="col-md-4">
+            <span class="font-weight-bold">Delivery Details</span>
+          </div>
+          <div class="col-md-4">
+            <span class="font-weight-bold">Order Details</span>
+          </div>
+          <div class="col-md-2">
+            <span>Total</span>
+          </div>
+        </div>
+      </div>
+      {{!-- table row head end --}}
+
+      {{#if order}}
+
+      {{!-- table Content start --}}
+      {{#each order}}
+      <a href="/view-order-products/{{this._id}}" style="all: unset; cursor: pointer;">
+        <div class="card mt-3" style="border-radius: 10px; background-color: #ffffff ;border: 0;">
+          <div class="card-body row">
+
+            <div class="align-self-center d-flex justify-content-center col-md-2">
+              <span class="font-weight-bold text-secondary">{{this.no}}</span>
+            </div>
+
+            <div class="col-md-4">
+              Order Placed on <span class="font-weight-bold">{{this.date}}</span> <br>
+              <span class="text-capitalize text-info">{{this.deliveryDetails.name}}</span> <br>
+            </div>
+
+            <div class="col-md-4">
+              Status : <span class="font-weight-bold delivery-status-adv">{{this.status}}</span> <br>
+              Total Products : <span class="font-weight-bold">{{this.totalProducts}}</span> <br>
+            </div>
+
+            <div class="col-md-2 align-self-center">
+              <span class="font-weight-bold format-price ">{{this.totalAmount}}</span>
+            </div>
+
+          </div>
+        </div>
+      </a>
+      {{/each}}
+
+
+
+      {{else}}
+
+      <div class="text-center">
+        <img class="img-fluid px-3 px-sm-4 pt-5 mt-3 mb-4" style="width: 40rem;" src="/images/no order.svg" alt="...">
+      </div>
+      <div class="d-flex justify-content-center mt-3">
+        <h5 class="text-danger">Seems Like You haven't ordered anything
+      </div>
+      <div class="d-flex justify-content-center mt-3">
+        <a href="/explore" class="btn btn-primary">shop</a>
+      </div>
+      {{/if}}
+      {{!-- table Content end--}}
+
+
+    </div>
+    {{!-- My Orders User Section End --}}
+
+  </div>
+</section>
+
+<section class="admin-section pt-4" id="table-view" style="display: none;">
+  <div class="container-fluid px-5 ">
+
+    <table class="table table-responsive table-hover table-bordered border-dark ">
+      <thead>
+        <tr>
+          <th scope="col" class="col-3">Date</th>
+          <th scope="col" class="col-2">Address</th>
+          <th scope="col" class="col-2">Mobile</th>
+          <th scope="col" class="col-1">Amount</th>
+          <th scope="col" class="col-1">Payment</th>
+          <th scope="col" class="col-1">Status</th>
+          <th>Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each order}}
+        <tr>
+          <td>{{this.date}}</td>
+
+          <td>{{this.deliveryDetails.name}} <br>
+            {{this.deliveryDetails.address}} <br>
+            {{this.deliveryDetails.pincode}} <br>
+            {{this.deliveryDetails.state}}
+          </td>
+          <td>{{this.deliveryDetails.phone}}</td>
+          <td><strong>₹{{this.totalAmount}}</strong></td>
+          <td>{{this.paymentMethod}}</td>
+          <td class="deliveryStatus" id="{{this._id}}">{{this.status}}</td>
+          <td><a href="/view-order-products/{{this._id}}"
+              class="btn btn-dark btn-sm text-white border-0 btn-dark-blue mt-2">View Order</a>
+            <button id="cancelButton{{this._id}}"
+              class="cancelButton btn btn-sm text-danger border border-danger mt-2 ml-2"
+              onclick="orderCancel('{{this._id}}')">Cancel</button>
+            <button id="returnButton{{this._id}}" class="returnButton btn btn-sm text-danger border border-danger mt-2"
+              style="display: none;" onclick="orderReturn('{{this._id}}')">Return</button>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<script>
+  let deliveryD = document.querySelectorAll('.delivery-status-adv')
+  console.log(deliveryD)
+
+  for (var i = 0; i < deliveryD.length; ++i) {
+    console.log(deliveryD[i].innerHTML)
+    if (deliveryD[i].innerHTML == 'Cancelled') {
+      console.log('red')
+      deliveryD[i].style.color = 'red'
+    } else if (deliveryD[i].innerHTML == 'Delivered') {
+      deliveryD[i].style.color = 'green'
+    }
+
+  }
+</script>
+
+<script>
+
+  // window.addEventListener("load", checkOrderStatus);
+  // function checkOrderStatus() {
+  let status = document.querySelectorAll('.deliveryStatus')
+  console.log(status)
+  let cancelButton = document.querySelectorAll('.cancelButton')
+  let returnButton = document.querySelectorAll('.returnButton')
+  for (var i = 0; i < status.length; ++i) {
+    if (status[i].innerHTML == 'Cancelled') {
+      cancelButton[i].style.display = 'none'
+    } else if (status[i].innerHTML == 'Delivered') {
+      cancelButton[i].style.display = 'none'
+      returnButton[i].style.display = 'block'
+    }
+  }
+  // }
+
+  function orderCancel(orderId) {
+    $.ajax({
+      url: '/order-cancel',
+      data: {
+        order: orderId
+      },
+      method: 'post',
+      success: (response) => {
+        document.getElementById(orderId).innerHTML = "Cancelled"
+        document.getElementById('cancelButton' + orderId).style.display = 'none'
+        //document.getElementById(proId).innerHTML=quantity+count
+        //document.getElementById('totalAll').innerHTML=response.totalAmount
+        //document.getElementById('totalAll2').innerHTML=response.totalAmount
+        //document.getElementById(proPrice).innerHTML=response.totalOne
+        //$(proModel).attr("disabled", false);
+      }
+    })
+  }
+
+  var price = document.getElementsByClassName("format-price")
+  for (let i = 0; i < price.length; i++) {
+    var tempPrice = parseFloat(price[i].innerHTML)
+    tempPrice = `₹${tempPrice.toLocaleString('hi')}`
+    price[i].innerHTML = tempPrice
+  }
+
+  function showTable() {
+    document.getElementById('table-view').style.display = 'block'
+    document.getElementById('advanced-view').style.display = 'none'
+  }
+
+  function showAdvanced() {
+    var table = document.getElementById('table-view').style.display = 'none'
+    document.getElementById('advanced-view').style.display = 'block'
+  }
+
+
+
+
+
+</script>

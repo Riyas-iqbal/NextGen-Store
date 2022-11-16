@@ -1,0 +1,110 @@
+<div class="text-sm font-weight-bold text-primary ml-3 mb-4"><a href="/admin/home" class="hover-1">Admin </a> <i
+        class="fa-solid fa-angle-right"> </i> <a href="/admin/view-category" class="hover-1">Category</a></div>
+<!-- Begin Page Content -->
+<div class="container-fluid p-0">
+
+    <h2 class="font-weight-bold mb-3 mt-3 pl-5 hover-3 overflow-hidden ">Category Management</h2>
+
+    <table  class="table align-middle table-hover mb-0 bg-white ">
+        <thead class="bg-light">
+            <tr>
+                <th>Index</th>
+                {{!-- <th>Image</th> --}}
+                <th>Title</th>
+                {{!-- <th>Status</th> --}}
+                {{!-- <th>Position</th> --}}
+                <th class="pl-5">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each category}}
+            <tr>
+                <td>
+                    <span class="create_index"></span>
+                </td>
+                {{!-- <td>
+                    <div class="d-flex align-items-center">
+                        <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt=""
+                            style="width: 45px; height: 45px" class="rounded-circle" />
+                    </div>
+                </td> --}}
+                <td>
+                    <p class="fw-bold mb-1 text-capitalize">{{this.category}}</p>
+                    {{!-- <p class="text-muted mb-0">john.doe@gmail.com</p> --}}
+                </td>
+                {{!-- <td>
+                    <span class="badge badge-success rounded-pill d-inline">Active</span>
+                </td> --}}
+                {{!-- <td>Senior</td> --}}
+                <td>
+                    <a type="button" href="/admin/edit-category?name={{this.category}}" id="element" 
+                     title="Edit Category : {{this.category}}" class="badge badge-primary btn btn-sm btn-rounded">
+                        Edit
+                    </a>
+                    <a type="button" href="/admin/delete-category?name={{this.category}}" id="btnDelete" 
+                     title="Delete Category : {{this.category}}" class="badge badge-warning btn btn-sm btn-rounded">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    <button id="toggle" type="button" class="m-3 btn btn-secondary">Hide Category</button>
+    <div id="addCategory" class="p-5 pt-3">
+        <form action="/admin/add-category" method="post">
+            <div class="form-row">
+                <div class="form-group col-md-6 mb-0">
+                    <label for="category" class="form-label"><strong>Category Name</strong></label>
+                    <input type="text" name="category" class="form-control" id="category" placeholder="Category Name">
+                </div>
+                <div class="form-group col-md-6 mb-0">
+                </div>
+                <div class="form-group col-md-6 mb-0">
+                    <label for="description" class="form-label"><strong>Description</strong></label>
+                    <input type="text" name="description" class="form-control" id="description" placeholder="Description">
+                </div>
+                <div class="form-group col-md-6 mb-0">
+                    <div class="form-group col mt-2 float-left">
+                        <button type="submit" class="btn btn-primary mt-4">Add Category</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        {{#if categoryExist}}
+        <strong class="text-danger">Category Already Exist. <span>Please create a new category or Update existing one
+            </span></strong>
+        {{/if}}
+    </div>
+</div>
+<!-- /.container-fluid -->
+
+
+<script>
+    var divs = document.querySelectorAll('.create_index');
+    for (var i = 0; i < divs.length; ++i) {
+        divs[i].innerHTML = i + 1;
+    }
+
+
+    const targetDiv = document.getElementById("addCategory");
+    const btn = document.getElementById("toggle");
+    btn.onclick = function () {
+        if (targetDiv.style.display !== "none") {
+            targetDiv.style.display = "none";
+        } else {
+            targetDiv.style.display = "block";
+        }
+        if (btn.innerHTML == "Hide Category") {
+            btn.innerHTML = "Add New Category";
+        } else {
+            btn.innerHTML = "Hide Category";
+        }
+    };
+
+    const deleteBtn = document.getElementById("btnDelete");
+    deleteBtn.onclick = function () {
+        targetDiv.style.display = "none";
+    }
+</script>

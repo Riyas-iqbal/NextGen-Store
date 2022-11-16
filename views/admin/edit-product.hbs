@@ -1,0 +1,157 @@
+{{!-- <div class="text-sm font-weight-bold text-primary ml-3 mb-4"><a href="/admin/home" class="hover-1"> Admin </a> <i class="fa-solid fa-angle-right"> </i>
+         <a href="/admin/view-users" class="hover-1"> Users   </a>  <i class="fa-solid fa-angle-right"> </i>
+         <a href="/admin/add-products" class="hover-1"> Add-Product</a></div>
+<div class="col-lg-9 p-5 ml-5 mt-5 mb-2">
+    <h2 class="ml-5 font-weight-bold">Edit Product</h3>
+    <h4 class="ml-5 mb-5" style="color: #ff6600;"></h4>
+    <form class="ml-5 row contact_form" enctype="multipart/form-data" action="/admin/update-product/{{product._id}}"
+        method="post" id="contactForm" novalidate="novalidate">
+        <div class="col-md-6">
+            <div class="form-group">
+                <input type="text" class="form-control" id="name" name="name" value="{{product.name}}">
+            </div>
+            <div class="form-group">
+                    <label for="brand">Select Brand</label>
+                    <select class="form-select" name="brand" required aria-label="Default select example" id="brand">
+                        <option selected value="{{product.category}}"></option>
+                        {{#each category}}
+                        <option value="{{this.category}}">{{this.category}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="subject" name="price" value="{{product.price}}">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <textarea class="form-control" name="description" id="message" rows="3"
+                    placeholder="{{product.description}}" value="{{product.description}}"></textarea>
+            </div>
+        </div>
+        <div class="quantity-container d-flex align-items-center mt-15 ml-3">
+            <small class="mr-2">Quantity:</small>
+            <input type="number" name="quantity" class="quantity-amount ml-15" value="  product.quantity}}" />
+            </div>
+
+        <div class="row">
+            <label for="formFileLg" class="form-label  ml-2 mt-2"><small>Select Image</small> </label>
+            <img src="/product-image/{{product._id}}.jpg" style="width: 10%; height: 10%px" class="ml-2" id="imgUpdate">
+            <input name="image" class="form-control form-control-lg  ml-3 mt-3 " id="formFileLg" type="file" style="width:25%;"
+                onchange="/*viewImage(event)*/" />
+            <div class="col text-right">
+                <button type="submit" value="submit" class="btn btn-success">Edit Product</button>
+            </div>
+        </div>
+        </div>
+    </form>
+</div>
+<script>
+    /*function viewImage(event) {
+        document.getElementById('imgUpdate').src = URL.createObjectURL(event.target.files[0])
+    }*/
+</script> --}}
+
+<div class="text-sm font-weight-bold text-primary ml-3 mb-4"><a href="/admin/home" class="hover-1">Admin</a> <i class="fa-solid fa-angle-right"> </i>
+        <a href="/admin/view-products" class="hover-1">Products</a> <i class="fa-solid fa-angle-right"> </i>
+        <a href="/admin/add-products" class="hover-1">Edit-Product</a></div>
+
+
+<h2 class="font-weight-bold m-0 pl-5 hover-3 overflow-hidden ">Update product Details</h2>
+<div class="container d-flex justify-content-center">
+    <div class="col p-5 pt-4">
+        <form class="row contact_form"  enctype="multipart/form-data" action="/admin/update-product/{{product._id}}"
+        method="post" id="contactForm">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="product">Product Name</label>
+                    <input type="text" class="form-control"  id="name" name="name" placeholder="Product name" value="{{product.name}}" required >
+                </div>
+                <div class="form-group">
+                    <label for="brand">Select Brand</label>
+                    <select class="form-select" name="category" aria-label="Default select example" id="brand">
+                        <option selected>{{product.category}}</option>
+                        {{#each category}}
+                        <option value="{{this.category}}">{{this.category}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price</label>
+                    <input type="number" class="form-control" required min="0" id="price" name="price" value="{{product.price}}" placeholder="Price">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input class="form-control" required name="description" id="description" rows="1"
+                        placeholder="Description"  value="{{product.description}}"></input>
+                </div>
+                <div class="form-group"> 
+                    <label for="ramselect">Select RAM</label>
+                    <select class="form-select" name="ram"  id="ramselect" >
+                        <option value="{{product.ram}}" selected >{{product.ram}}</option>
+                        <option value="1">1GB</option>
+                        <option value="2">2GB</option>
+                        <option value="4">4GB</option>
+                        <option value="6">6GB</option>
+                        <option value="8">8GB</option>
+                        <option value="16">16GB</option>
+                    </select>
+                </div>
+                <div class="form-group"> 
+                    <label for="storage select">Select Storage</label>
+                    <select class="form-select" name="storage"   aria-label="Default select example" id="ramselect" >
+                        <option value="{{product.storage}}" selected >{{product.storage}}</option>
+                        <option value="8">8 GB</option>
+                        <option value="16">16 GB</option>
+                        <option value="32">32 GB</option>
+                        <option value="64">64 GB</option>
+                        <option value="128">128 GB</option>
+                        <option value="256">256 GB</option>
+                        <option value="512">512 GB</option>
+                        <option value="1024"><strong>1024 GB</strong></option>
+                    </select>
+                </div>
+            </div>
+            <div class="quantity-container d-flex align-items-center mt-15 ml-3">
+                <small class="mr-2">Quantity:</small>
+                <input type="number" min="1" required name="quantity" class="quantity-amount ml-15" value="{{product.quantity}}"/>
+            </div>
+
+            <div class="row">
+                <label for="formFileLg" class="form-label  ml-2 mt-2"><small>Select Image</small> </label>
+                <img src="/product-image/{{product._id}}.jpg" style="width: 10%; height: 10%px" class="ml-2" id="imgUpdate">
+                <input name="image" class="form-control form-control-lg  ml-3 mt-3 " id="formFileLg" type="file" style="width:25%;"
+                    onchange="viewImage(event)" />
+                <div class="row">
+                    <label for="formFileLg" class="form-label  ml-2 mt-2"><small>Select Image</small> </label>
+                    <img src="/product-image/{{product._id}}1.jpg" style="width: 10%; height: 10%px" class="ml-2" id="imgUpdate1">
+                    <input name="image1" class="form-control form-control-lg  ml-3 mt-3 " id="formFileLg" type="file"
+                        style="width:25%;" onchange="viewImage1(event)" />
+                </div>
+                <div class="row">
+                    <label for="formFileLg" class="form-label  ml-2 mt-2"><small>Select Image</small> </label>
+                    <img src="/product-image/{{product._id}}2.jpg" style="width: 10%; height: 10%px" class="ml-2" id="imgUpdate2">
+                    <input name="image2" class="form-control form-control-lg  ml-3 mt-3 " id="formFileLg" type="file"
+                        style="width:25%;" onchange="viewImage2(event)" />
+                </div>
+                <div class="col text-right">
+                    <button type="submit" value="submit" class="btn btn-success">Edit Product</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function viewImage(event) {
+        document.getElementById('imgUpdate').src = URL.createObjectURL(event.target.files[0])
+    }
+    function viewImage1(event) {
+        document.getElementById('imgUpdate1').src = URL.createObjectURL(event.target.files[0])
+    }
+    function viewImage2(event) {
+        document.getElementById('imgUpdate2').src = URL.createObjectURL(event.target.files[0])
+    }
+</script>

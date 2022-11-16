@@ -1,0 +1,153 @@
+<section class="h-100 gradient-custom">
+  <div class="container py-5">
+    <div class="row d-flex justify-content-center my-4">
+      <div class="col-md-5 col-lg-4 order-md-last">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-primary">Order summary</span>
+          {{!-- <span class="badge bg-primary rounded-pill">3</span> --}}
+        </h4>
+        <ul class="list-group mb-3">
+          {{#each products}}
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0 text-uppercase">{{this.product.category}}</h6>
+               <span class="text-dark fs-6">{{this.product.name}} ({{this.product.ram}}/{{this.product.storage}})</span><br>
+              <strong class="">x {{this.quantity}}</strong>
+            </div>
+            <strong class="">₹{{this.product.price}}</strong>
+          </li>
+          {{/each}}
+
+          {{!-- <li class="list-group-item d-flex justify-content-between bg-light">
+            <div class="text-success">
+              <h6 class="my-0">Coupon</h6>
+              <small>EXAMPLECODE</small>
+            </div>
+            <span class="text-success">−₹5</span>
+          </li> --}}
+          <li class="list-group-item d-flex justify-content-between">
+            <span>Total </span>
+            <strong>₹ {{totalAmount}}</strong>
+          </li>
+        </ul>
+
+        <form class="card p-2">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Coupon">
+            <button type="submit" class="btn btn-secondary">Enter</button>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Billing address</h4>
+        <form class="needs-validation" id="checkout-form">
+          <div class="row g-3">
+            <div class="col-12">
+              <label for="firstName" class="form-label">Full name</label>
+              <input type="text" class="form-control" id="firstName" name="name" placeholder="" value="" required>
+              <input type="text" name="userId" value="{{user._id}}" hidden>
+            </div>
+
+
+            <div class="col-6">
+              <label for="email" class="form-label">Email <span class="text-muted"></span></label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="" required>
+            </div>
+
+            <div class="col-6">
+              <label for="text" class="form-label">Phone number <span class="text-muted"></span></label>
+              <input type="text" class="form-control" id="mobile" name="phone" placeholder="" pattern="(7|8|9)\d{9}$" 
+                    title="Enter a valid phone number,must be a 10 digit number" required>
+              
+            </div>
+
+            <div class="col-12">
+              <label for="address" class="form-label">Address</label>
+              <input type="text" class="form-control" id="address" name="address" placeholder="" required>
+             
+            </div>
+
+            {{!-- <div class="col-6">
+              <label for="address2" class="form-label">Address 2 <span class="text-muted">(Optional)</span></label>
+              <input type="text" class="form-control" id="address2" placeholder="">
+            </div> --}}
+
+
+
+            <div class="col-6">
+              <label for="address" class="form-label">State</label>
+              <input type="text" class="form-control" id="address" name="state" placeholder="" required>
+             
+            </div>
+
+            <div class="col-md-6">
+              <label for="zip" class="form-label">Zip</label>
+              <input type="text" class="form-control" id="zip" name="pincode" placeholder="" pattern="[0-9]{6}"
+              title="Enter a valid pincode,must be 6 digit" required>
+              
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="same-address">
+            <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
+          </div>
+
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="save-info">
+            <label class="form-check-label" for="save-info">Save this information for next time</label>
+          </div>
+
+          <hr class="my-4">
+
+          <h4 class="mb-3">Payment</h4>
+
+          <div class="my-3">
+            {{!-- <div class="form-check ">
+              <input id="credit" name="paymentMethod" type="radio" class="form-check-input" value="ONLINE" checked required>
+              <label class="form-check-label fs-5" for="credit">Razorpay</label>
+            </div>
+            <div class="form-check">
+              <input id="credit" name="paymentMethod" type="radio" class="form-check-input" value="PAYPAL" checked required>
+              <label class="form-check-label fs-5" for="credit">PayPal</label>
+            </div> --}}
+            <div class="form-check">
+              <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" value="COD" required>
+              <label class="form-check-label fs-5" for="paypal">COD</label>
+            </div>
+          </div>
+
+
+
+          <hr class="my-4">
+
+          <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  $("#checkout-form").submit((e)=>{
+    e.preventDefault()
+    $.ajax({
+      url:'/place-order',
+      method:'post',
+      data:$('#checkout-form').serialize(),
+      success:(response)=>{
+        //alert(response)
+        console.log(response)
+        if(response.codSuccess){
+          location.href='/status-page'  //order placed msg go to orders
+        }
+      }
+    })
+  })
+
+
+
+
+</script>

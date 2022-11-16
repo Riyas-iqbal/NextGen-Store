@@ -1,0 +1,148 @@
+<div class="forgradient pt-5 mt-5">
+  <section class="gradient-custom">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card bg-dark text-white" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+
+              <div class="mb-md-2 mt-md-4 pb-3">
+                <h2 class="fw-bold mb-2 text-uppercase">OTP Login</h2>
+                <p class="text-white-50 mb-5">Please enter your Phone Number</p>
+
+
+                {{!-- Verify OTP form /verify-otp --}}
+                {{#if otpSend}}
+                <p class="text-success">Otp successfully sent. please check your messages</p>
+
+                <form action="/verifyotp" method="post">
+                  <div class="form-outline form-white mb-3">
+                    <input type="password" required id="typePasswordX" name="otp"
+                      class="form-control form-control-lg" />
+                    <label class="form-label" for="typePasswordX">One time Password (OTP)</label>
+                  </div>
+                  {{#if wrongOtp}}
+                  <p class="text-warning">Incorrect Otp!</p>
+                  {{/if}}
+                  <button class="btn btn-outline-light btn-sm px-4" type="submit">Login</button>
+                </form>
+
+                <div class="content d-flex justify-content-center align-items-center mt-4">
+                  <span>Didn't
+                    get the code?</span> <button id="myBtn" onclick="resendOTP();" class="btn btn-light ml-3 mr-2"
+                    disabled>Resend OTP
+                    in</button>
+                  <p class="btn btn-outline-light mt-3" id="myTimer"></p>
+
+                </div>
+                {{#if otpResend}}
+                <p class="text-success">Otp successfully Resend</p>
+                {{/if}}
+                {{!-- Verify OTP form end --}}
+
+
+                {{else}}
+
+
+                {{!-- Send OTP form --}}
+                <form action="/sendotp" method="post">
+                  <div class="form-outline form-white mb-2">
+                    <input type="tel" class="form-control form-control-lg" id="myform_phone" name="phonenumber" required
+                      pattern="[0-9]{10}">
+                    <label class="form-label" for="myform_phone">Phone Number</label>
+                  </div>
+                  {{#if noaccount}}
+                  <p><a href="#" class="text-warning">The Phone Number you Entered is not connected to any account!
+                      Please Create a account first</a></p>
+                  {{/if}}
+                  <button class="btn btn-outline-light btn-sm px-4 mt-3 mb-3" type="submit">Send Otp</button>
+                </form>
+                {{!-- Send OTP form end --}}
+                
+                <p class="mb-0">Don't have an account? <a href="/signup" class="text-white-50 fw-bold">Sign Up</a></p>
+
+                {{/if}}
+              </div>
+              <div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+
+<script>
+  //----------Otp CountDown--------------//
+
+  function resendOTP() {
+    console.log('functioncalled')
+    $.ajax({
+      url: "/resend-otp",
+      method: 'get',
+      success:()=>{
+        location.reload()
+      }
+    })
+  }
+
+
+
+  var sec = 30;
+  var myTimer = document.getElementById('myTimer');
+  var myBtn = document.getElementById('myBtn');
+  window.onload = countDown();
+
+  function countDown() {
+    if (sec < 10) {
+      myTimer.innerHTML = "0" + sec;
+    } else {
+      myTimer.innerHTML = sec;
+    }
+    if (sec <= 1) {
+      $("#myBtn").removeAttr("disabled");
+      $("#myBtn").removeClass().addClass("ml-2 btn btn-outline-light");
+      $("#myTimer").fadeTo(500, 0);
+      myBtn.innerHTML = "RESEND";
+      return;
+    }
+    sec -= 1;
+    window.setTimeout(countDown, 1000);
+  }
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+{{!-- validating phone number --}}
+<script>
+  var phone_input = document.getElementById("myform_phone");
+
+  phone_input.addEventListener('input', () => {
+    phone_input.setCustomValidity('');
+    phone_input.checkValidity();
+  });
+
+  phone_input.addEventListener('invalid', () => {
+    if (phone_input.value === '') {
+      phone_input.setCustomValidity('please enter your 10 Digit phone number');
+    } else {
+      phone_input.setCustomValidity('Phone Number should contain 10 Digit');
+    }
+  });
+
+
+
+
+</script>

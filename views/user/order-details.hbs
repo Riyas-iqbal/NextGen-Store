@@ -1,0 +1,72 @@
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="breadcrumb__text">
+          <h4>Ordered Products</h4>
+          <div class="breadcrumb__links">
+            <a href="/">Home</a>
+            <a href="/profile">Account</a>
+            <a href="/view-orders">Orders</a>
+            <span>View Products</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+
+
+<section class="user-section">
+  <div class="container pt-3 ms-auto me-auto user-section ">
+    <h2 class="ms-4">Ordered Products</h2>
+    <div class="row">
+                        {{#each orders}}
+                        <div class="col-lg-4 col-md-6 col-sm-6" title="View {{this.product.name}}" >
+                            <div class="product__item" style="cursor:pointer" onclick="document.location='/product-details?id={{this.product._id}}'">
+                                <div class="product__item__pic set-bg" style="background-size: 15rem;" data-setbg="/product-image/{{this.product._id}}.jpg" >
+                                    <ul class="product__hover">
+                                        <li><a href="#"><img style="
+                                            background: #f0f4f7;
+                                            color: white;" src="/img/icon/heart.png" alt=""><span>Wishlist</span></a></li>
+                                        <li><a href="#" style="width: 100%;"><img src="/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                                        {{!-- <li><a href="#"><img src="img/icon/search.png" alt=""></a></li> --}}
+                                      
+                                    </ul>
+                                </div>
+                                <div class="product__item__text">
+                                    <h6 class="text-capitalize">{{this.product.name}}</h6>
+                                        <a class="text-capitalize add-cart">{{this.product.name}} <br>Quantity : {{this.quantity}}</a>
+                                    {{!-- rating --}}
+                                    {{!-- <div class="rating">
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                    </div> --}}
+                                    <h6>{{this.product.ram}}GB Ram | {{this.product.storage}}GB Storage </h6>
+                                    <h5>₹{{this.product.price}}</h6>
+                                    {{!-- <div class="product__color__select">
+                                        <label for="pc-4">
+                                            <input type="radio" id="pc-4">
+                                        </label>
+                                        <label class="active black" for="pc-5">
+                                            <input type="radio" id="pc-5">
+                                        </label>
+                                        <label class="grey" for="pc-6">
+                                            <input type="radio" id="pc-6">
+                                        </label>
+                                    </div> --}}
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                        
+                    </div>
+  </div>
+</section>

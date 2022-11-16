@@ -1,0 +1,151 @@
+<div class="text-sm font-weight-bold text-primary ml-3 mb-4"><a href="/admin/home" class="hover-1">Admin</a> <i
+        class="fa-solid fa-angle-right"> </i>
+    <a href="/admin/view-products" class="hover-1">Products</a> <i class="fa-solid fa-angle-right"> </i>
+    <a href="/admin/add-products" class="hover-1">Add-Product</a>
+</div>
+
+
+<h2 class="font-weight-bold m-0 pl-5 hover-3 overflow-hidden ">Add New Product</h2>
+<div class="container d-flex justify-content-center">
+    <div class="col p-5 pt-4">
+        <form class="row contact_form" enctype="multipart/form-data" action="/admin/add-products" method="post"
+            id="contactForm">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="product">Product Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Product name" required>
+                </div>
+                <div class="form-group">
+                    <label for="brand">Select Brand</label>
+                    <select class="form-select" name="category" required aria-label="Default select example" id="brand">
+                        <option selected></option>
+                        {{#each category}}
+                        <option value="{{this.category}}">{{this.category}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price</label>
+                    <input type="number" class="form-control" required min="0" id="price" name="price"
+                        placeholder="Price">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" required name="description" id="description" rows="1"
+                        placeholder="Description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="ramselect">Select RAM</label>
+                    <select class="form-select" name="ram"  id="ramselect">
+                        <option selected value="1">1GB</option>
+                        <option value="2">2GB</option>
+                        <option value="4">4GB</option>
+                        <option value="6">6GB</option>
+                        <option value="8">8GB</option>
+                        <option value="16">16GB</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="storage select">Select Storage</label>
+                    <select class="form-select" name="storage" aria-label="Default select example"
+                        id="ramselect">
+                        <option selected value="8">8 GB</option>
+                        <option value="16">16 GB</option>
+                        <option value="32">32 GB</option>
+                        <option value="64">64 GB</option>
+                        <option value="128">128 GB</option>
+                        <option value="256">256 GB</option>
+                        <option value="512">512 GB</option>
+                        <option value="1024"><strong>1024 GB</strong></option>
+                    </select>
+                </div>
+            </div>
+            <div class="quantity-container d-flex align-items-center mt-15 ml-3">
+                <small class="mr-2">Quantity:</small>
+                <input type="number" min="1" required name="quantity" class="quantity-amount ml-15" value="1" />
+            </div>
+
+            <div class="form-group  m-0 p-0 mt-4" >
+                <label for="imgFile1">Upload 3 Product Images</label>
+                <input type="file" class="form-control form-control-lg ml-3" id="imgFile1" accept="image/*" name="image" style="width:50%;" required>
+                <img src="" id="image-1" alt="" class="imggmi" style="height:150px;">
+            </div>
+
+            <div class="row">
+                <div class="d-none d-sm-none d-md-block col-md-3"></div>
+                <div class="col-md-6">
+                    <div style="display:flex">
+                        <div id="screen1" class="imggmi image-container mt-2" style="height: 30rem;"></div> <br>
+                    </div>
+                    <div class="d-flex justify-content-end"> <button type="button"
+                            class="btn btn-sm bg-primary text-white mt-1 mb-1" id="crop-1"
+                            style=" margin-top: 0px;  display: none; width: 100px;">Crop</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <input name="image1" required class="form-control form-control-lg  ml-3 mb-4" id="formFileLg" type="file"
+                style="width:50%;" />
+            <input name="image2" required class="form-control form-control-lg  ml-3 " id="formFileLg" type="file"
+                style="width:50%;" />
+            <div class="col-md-12 text-right">
+                <button type="submit" id="submitBtn" value="submit" class="btn btn-primary">Add Product</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .imggmi {
+        display: none;
+    }
+</style>
+
+<script>
+    const imagebox1 = document.getElementById('screen1')
+    const crop_btn1 = document.getElementById('crop-1')
+    const input1 = document.getElementById('imgFile1')
+    document.getElementById("submitBtn").disabled = false;
+
+    input1.addEventListener('change', () => {
+        const img_data1 = input1.files[0]
+        const url1 = URL.createObjectURL(img_data1)
+        imagebox1.innerHTML = `<img src="${url1}" id="img1" style="width:100%;">`
+        const img1 = document.getElementById('img1')
+        document.getElementById("submitBtn").disabled = true;
+        document.getElementById('screen1').style.display = 'block'
+        document.getElementById('crop-1').style.display = 'block'
+        
+
+        const cropper1 = new Cropper(img1, {
+            autoCropArea: 1,
+            viewMode: 1,
+            scalable: false,
+            zoomable: false,
+            movable: false,
+            minCropBoxWidth: 50,
+            minCropBoxHeight: 50,
+            aspectRatio: 1 / 1,
+        })
+
+        crop_btn1.addEventListener('click', () => {
+
+            cropper1.getCroppedCanvas().toBlob((blob) => {
+                let fileInputElement1 = document.getElementById('imgFile1');
+                let file1 = new File([blob], img_data1.name, { type: "image/*", lastModified: new Date().getTime() });
+                let container1 = new DataTransfer();
+                container1.items.add(file1);
+                fileInputElement1.files = container1.files;
+                document.getElementById('image-1').src = URL.createObjectURL(fileInputElement1.files[0])
+                document.getElementById('screen1').style.display = 'none'
+                document.getElementById('crop-1').style.display = 'none'
+                document.getElementById("submitBtn").disabled = false;
+                document.getElementById('image-1').style.display = 'block'
+            })
+        })
+
+    })
+</script>

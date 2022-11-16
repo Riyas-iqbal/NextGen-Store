@@ -1,0 +1,28 @@
+{
+  "name": "nextgen-smartphones",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "express-fileupload": "^1.4.0",
+    "express-handlebars": "^6.0.6",
+    "express-session": "^1.17.3",
+    "hbs": "^4.2.0",
+    "http-errors": "~1.6.3",
+    "mongodb": "^4.10.0",
+    "morgan": "~1.9.1",
+    "nocache": "^3.0.4",
+    "nodemon": "^2.0.20",
+    "paypal-rest-sdk": "^1.8.1",
+    "razorpay": "^2.8.3",
+    "req-flash": "^0.0.3",
+    "twilio": "^3.82.1",
+    "uid": "^2.0.1"
+  }
+}

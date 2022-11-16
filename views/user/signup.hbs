@@ -1,0 +1,89 @@
+<!-- Section: Design Block -->
+<section class="text-center">
+  <!-- Background image -->
+  <div class="p-5 bg-image ng-background-image"></div>
+  <!-- Background image -->
+
+  <div class="card mx-4 mx-md-5 shadow-5-strong" style="
+        margin-top: -70px;
+        background: hsla(0, 0%, 100%, 0.9);
+        backdrop-filter: blur(50px);
+        ">
+    <div class="card-body py-5 px-md-5">
+
+      <div class="row d-flex justify-content-center">
+        <div class="col-lg-8">
+          <h2 class="fw-bold mb-5 text-uppercase ng-create-account" >Create a New NextGen Account</h2>
+          <form action="/user_registration" method="post">
+            <!-- 2 column grid layout with text inputs for the first and last names -->
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <div class="form-outline">
+                  <input type="text" id="form3Example1" required name="name" class="form-control" />
+                  <label class="form-label" for="form3Example1">Name</label>
+                </div>
+              </div>
+              <div class="col-md-6 mb-4">
+                <div class="form-outline">
+                  <input type="text" id="form3Example2" required name="username" class="form-control" />
+                  <label class="form-label" for="form3Example2">Username</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- PhoneNumber input -->
+            <div class="form-outline mb-4">
+              <input type="tel" class="form-control" id="form3Example4" name="phonenumber" required pattern="[0-9]{10}">
+              {{!-- <input type="text" id="form3Example4" required name="phonenumber" class="form-control" /> --}}
+              <label class="form-label" for="form3Example4">Phone No.</label>
+            </div>
+
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+              <input type="email" id="form3Example3" required name="email" class="form-control" />
+              <label class="form-label" for="form3Example3">Email address</label>
+            </div>
+
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+              <input type="password" id="form3Example4" required name="password" class="form-control" />
+              <label class="form-label" for="form3Example4">Password</label>
+            </div>
+
+            <!-- Checkbox -->
+            <div class="form-check d-flex justify-content-center mb-4">
+              <label class="form-check-label" for="form2Example33">
+                <a href="/login" class="text-hover-black">Already Have an Account? </a>
+              </label>
+            </div>
+            <p class="text-danger">{{emailExist}}{{numberExist}}</p>
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-block mb-4">
+              Sign up
+            </button>
+          </form>
+          <img src="/images/nextgen logo black.svg" alt="" srcset="">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Section: Design Block -->
+
+<style>
+  .ng-background-image {
+    background-image: url('https://www.bechtle.com/dam/jcr:a0a76a52-6182-4496-b7f8-0d0553430049/cw42_mainbanner_apple_iphone12-eu.jpg');
+    height: 300px;
+  }
+
+  @media (max-width: 500px) {
+    .ng-background-image {
+      height: 200px;
+    }
+
+    .ng-create-account{
+      font-size: 22px;
+      margin-bottom: 25px !important;
+    }
+  }
+</style>

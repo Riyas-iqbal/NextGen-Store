@@ -1,0 +1,349 @@
+<!-- Shop Section Begin -->
+
+<div class="alert alert-primary alert-dismissible fade" style="position: fixed;z-index: 100; top:10px; right:10px; "
+    id="messageScript" role="alert">
+    <strong>Item Added to <a href="/wishlist">Wishlist</a> <i class="fa-solid fa-square-check"></i> </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="alert alert-danger alert-dismissible fade" style="position: fixed;z-index: 100; top:10px; right:10px; "
+    id="messageExist" role="alert">
+    <strong>Item Already in <a class="text-danger" href="/wishlist">Wishlist</a> <i
+            class="fa-solid fa-square-check"></i> </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+
+<section class="shop spad">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-3">
+                <div class="shop__sidebar">
+                    <div class="shop__sidebar__search">
+                        <form action="#">
+                            <input type="text" placeholder="Search...">
+                            <button type="submit"><span class="icon_search"></span></button>
+                        </form>
+                    </div>
+                    <div class="shop__sidebar__accordion">
+                        <div class="accordion" id="accordionExample">
+                            <div class="card" style="box-shadow: none;">
+                                <div class="card-heading">
+                                    <a data-toggle="collapse" data-target="#collapseOne">Categories</a>
+                                </div>
+                                <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="shop__sidebar__categories">
+                                            <ul class="nice-scroll">
+                                                {{#each category}}
+                                                <li><a href="/category?category={{this.category}}"
+                                                        title="View Products from {{this.category}}"
+                                                        class="text-capitalize">{{this.category}}</a></li>
+                                                {{/each }}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{!-- <div class="card" style="box-shadow: none;">
+                                <div class="card-heading">
+                                    <a data-toggle="collapse" data-target="#collapseTwo">Branding</a>
+                                </div>
+                                <div id="collapseTwo" class="collapse show" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="shop__sidebar__brand">
+                                            <ul>
+                                                <li><a href="#">Louis Vuitton</a></li>
+                                                <li><a href="#">Chanel</a></li>
+                                                <li><a href="#">Hermes</a></li>
+                                                <li><a href="#">Gucci</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card" style="box-shadow: none;">
+                                <div class="card-heading">
+                                    <a data-toggle="collapse" data-target="#collapseThree">Filter Price</a>
+                                </div>
+                                <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="shop__sidebar__price">
+                                            <ul>
+                                                <li><a href="#">$0.00 - $50.00</a></li>
+                                                <li><a href="#">$50.00 - $100.00</a></li>
+                                                <li><a href="#">$100.00 - $150.00</a></li>
+                                                <li><a href="#">$150.00 - $200.00</a></li>
+                                                <li><a href="#">$200.00 - $250.00</a></li>
+                                                <li><a href="#">250.00+</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card" style="box-shadow: none;">
+                                <div class="card-heading">
+                                    <a data-toggle="collapse" data-target="#collapseFour">Size</a>
+                                </div>
+                                <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="shop__sidebar__size">
+                                            <label for="xs">xs
+                                                <input type="radio" id="xs">
+                                            </label>
+                                            <label for="sm">s
+                                                <input type="radio" id="sm">
+                                            </label>
+                                            <label for="md">m
+                                                <input type="radio" id="md">
+                                            </label>
+                                            <label for="xl">xl
+                                                <input type="radio" id="xl">
+                                            </label>
+                                            <label for="2xl">2xl
+                                                <input type="radio" id="2xl">
+                                            </label>
+                                            <label for="xxl">xxl
+                                                <input type="radio" id="xxl">
+                                            </label>
+                                            <label for="3xl">3xl
+                                                <input type="radio" id="3xl">
+                                            </label>
+                                            <label for="4xl">4xl
+                                                <input type="radio" id="4xl">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card" style="box-shadow: none;">
+                                <div class="card-heading">
+                                    <a data-toggle="collapse" data-target="#collapseFive">Colors</a>
+                                </div>
+                                <div id="collapseFive" class="collapse show" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="shop__sidebar__color">
+                                            <label class="c-1" for="sp-1">
+                                                <input type="radio" id="sp-1">
+                                            </label>
+                                            <label class="c-2" for="sp-2">
+                                                <input type="radio" id="sp-2">
+                                            </label>
+                                            <label class="c-3" for="sp-3">
+                                                <input type="radio" id="sp-3">
+                                            </label>
+                                            <label class="c-4" for="sp-4">
+                                                <input type="radio" id="sp-4">
+                                            </label>
+                                            <label class="c-5" for="sp-5">
+                                                <input type="radio" id="sp-5">
+                                            </label>
+                                            <label class="c-6" for="sp-6">
+                                                <input type="radio" id="sp-6">
+                                            </label>
+                                            <label class="c-7" for="sp-7">
+                                                <input type="radio" id="sp-7">
+                                            </label>
+                                            <label class="c-8" for="sp-8">
+                                                <input type="radio" id="sp-8">
+                                            </label>
+                                            <label class="c-9" for="sp-9">
+                                                <input type="radio" id="sp-9">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card" style="box-shadow: none;">
+                                <div class="card-heading">
+                                    <a data-toggle="collapse" data-target="#collapseSix">Tags</a>
+                                </div>
+                                <div id="collapseSix" class="collapse show" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="shop__sidebar__tags">
+                                            <a href="#">Product</a>
+                                            <a href="#">Bags</a>
+                                            <a href="#">Shoes</a>
+                                            <a href="#">Fashio</a>
+                                            <a href="#">Clothing</a>
+                                            <a href="#">Hats</a>
+                                            <a href="#">Accessories</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> --}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="shop__product__option">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="shop__product__option__left">
+                                <p>Showing 1–12 of 126 results</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="shop__product__option__right">
+                                <p>Sort by Price:</p>
+                                <select>
+                                    <option value="">Low To High</option>
+                                    <option value="">$0 - $55</option>
+                                    <option value="">$55 - $100</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {{#each products}}
+                    <div class="col-lg-4 col-md-6 col-sm-6" title="View {{this.name}}">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg" style="cursor:pointer"
+                                onclick="document.location='/product-details?id={{this._id}}'"
+                                style="background-size: 15rem;" data-setbg="/product-image/{{this._id}}.jpg">
+                                {{!-- <ul class="product__hover">
+                                    <li><a href="#"><img style="
+                                            background: #f0f4f7;
+                                            color: white;" src="img/icon/heart.png" alt=""><span>Wishlist</span></a>
+                                    </li>
+                                    <li><a href="#" style="width: 100%;"><img src="img/icon/compare.png" alt="">
+                                            <span>Compare</span></a></li>
+                                    <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
+                                </ul> --}}
+                            </div>
+                            <div class="product__item__text">
+                                <h6 class="text-capitalize">{{this.name}}</h6>
+                                <a href="/add-to-cart/{{this._id}}" title="Add {{this.name}} to Cart" class="add-cart">+
+                                    Add To Cart</a>
+                                {{!-- rating --}}
+                                {{!-- <div class="rating">
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div> --}}
+                                <h6>{{this.ram}}GB Ram | {{this.storage}}GB Storage </h6>
+                                <div class="d-flex justify-content-between ">
+
+                                    <div class="d-flex jusity-content-start">
+                                        {{#if cat_offer}}
+                                        <h5 class="priceofproduct text-success">{{this.price}}</h5>
+                                        <h6 class=" ml-2 text-secondary"><strike
+                                                class="priceofproduct">{{this.mrp}}</strike></h6>
+                                        {{else}}
+                                        <h5 class="priceofproduct">{{this.price}}</h5>
+                                        {{/if}}
+                                    </div>
+
+                                    {{#if this.wishlist}}
+                                    <button type="button" style="background: none; border: none; color: rgb(255, 0, 0);"
+                                        class="mr-3" onclick="addToWishlist('{{this._id}}')" title="Add to Wishlist  ">
+                                        <i style="font-size: large;" class="fa-solid fa-heart"></i>
+                                    </button>
+                                    {{else}}
+                                    <button type="button" class="mr-3 wishlist-color" id="wishlistIcon{{this._id}}"
+                                        onclick="addToWishlist('{{this._id}}')" title="Add to Wishlist  ">
+                                        <i style="font-size: large;" class="fa-solid fa-heart"></i>
+                                    </button>
+                                    {{/if}}
+
+                                </div>
+                                {{!-- <div class="product__color__select">
+                                    <label for="pc-4">
+                                        <input type="radio" id="pc-4">
+                                    </label>
+                                    <label class="active black" for="pc-5">
+                                        <input type="radio" id="pc-5">
+                                    </label>
+                                    <label class="grey" for="pc-6">
+                                        <input type="radio" id="pc-6">
+                                    </label>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="product__pagination">
+                            <a class="active" href="#">1</a>
+                            <a href="#">2</a>
+                            <a href="#">3</a>
+                            <span>...</span>
+                            <a href="#">21</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Shop Section End -->
+
+<style>
+    .wishlist-color {
+        background: none;
+        border: none;
+        color: rgb(149, 146, 146);
+    }
+
+    .wishlist-color:hover {
+        background: none;
+        border: none;
+        color: rgb(255, 0, 0);
+    }
+
+    .color-red {
+        color: rgb(255, 0, 0);
+    }
+</style>
+
+
+
+{{!-- Alert Message showing that the selected Product was added to wishlist --}}
+<script>
+    function addToWishlist(productId) {
+        console.log(productId)
+        $.ajax({
+            url: `/add-to-wishlist/${productId}`,
+            method: 'get',
+            success: (response) => {
+                if (response.exist) {
+                    $('#messageExist').addClass('show')
+                    setTimeout(() => {
+                        $('#messageExist').removeClass('show')
+                    }, 2000)
+                } else {
+                    $('#messageScript').addClass('show')
+                    $('#wishlistIcon' + productId).addClass('color-red')
+                    setTimeout(() => {
+                        $('#messageScript').removeClass('show')
+                    }, 2000)
+                }
+            }
+        })
+    }
+</script>
+{{!-- function to change price(string) to thousands separator format ( 125000 => ₹1,25,000 ) by fetching the element
+using class which will return an array --}}
+<script>
+    window.addEventListener('load', (event) => {
+        console.log('page is fully loaded');
+        var price = document.getElementsByClassName("priceofproduct")
+        for (let i = 0; i < price.length; i++) {
+            var tempPrice = parseFloat(price[i].innerHTML)
+            tempPrice = `₹${tempPrice.toLocaleString('hi')}`
+            price[i].innerHTML = tempPrice
+        }
+    });
+</script>

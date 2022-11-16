@@ -1,0 +1,84 @@
+
+<div class="text-sm font-weight-bold text-primary ml-3 mb-4"><a href="/admin/home" class="hover-1">Admin </a> <i class="fa-solid fa-angle-right"> </i> <a href="/admin/view-users" class="hover-1">Users</a></div>
+<div class="container-fluid mb-5 p-0">
+    <h2 class="font-weight-bold mb-5 pl-5 hover-3">Manage Users</h2>
+    <table class="table table-responsive-sm table-hover table-responsive-md  align-middle mb-0 bg-white">
+  <thead class="bg-light">
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone Number</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+     {{#each users}}
+    <tr>
+      <td>
+        <div class="d-flex align-items-center">
+          <div class="ms-0">
+            <p class="fw-bold mb-1 text-capitalize">{{this.name}}</p>
+            <p class="text-muted mb-0"></p>
+          </div>
+        </div>
+      </td>
+      <td>
+        <p class="fw-normal mb-1">{{this.email}}</p>
+      </td>
+      <td>
+        <p class="fw-normal mb-1">{{this.phonenumber}}</p>
+      </td>
+      <td>
+      
+         {{#if this.isBlocked}}
+        <span class="badge badge-warning rounded-pill d-inline" title="{{this.name}} is currently blocked">Blocked</span>
+        {{else}}
+          <span class="badge badge-success rounded-pill d-inline" title="{{this.name}} is active">Active</span>
+          {{/if}}
+      </td>
+      <td>
+        {{#if this.isBlocked}}
+     
+        <a type="button"href="/admin/unblockuser/{{this._id}}" title="Block {{this.name}}" class="badge badge-warning btn btn-sm btn-rounded">
+         Unblock
+        </a>
+         {{else}}
+        <!-- Block User Button trigger modal -->
+        <a type="button" class="badge badge-danger btn btn-sm btn-rounded" data-toggle="modal" data-target="#exampleModalCenter{{this._id}}">
+          Block
+        </a>
+
+        <!-- Modal Pop up to Block User start-->
+        <div class="modal fade" id="exampleModalCenter{{this._id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Block User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Are you sure you want to block <strong class="text-capitalize">{{this.name}}</strong>. This will restict him from accessing Nextgen Store
+              </div>
+              <div class="modal-footer">
+                <button type="button" class=" badge badge-secondary btn btn-sm btn-rounded" data-dismiss="modal">Close</button>
+                <a type="button" href="/admin/blockuser/{{this._id}}" title="Block {{this.name}}"
+                  class=" badge badge-danger btn btn-sm btn-rounded">
+                  block
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal Pop up to Block User end-->
+        
+        {{/if}}
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+</div>

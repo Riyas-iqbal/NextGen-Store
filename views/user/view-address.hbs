@@ -1,0 +1,247 @@
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="breadcrumb__text">
+          <h4>Profile</h4>
+          <div class="breadcrumb__links">
+            <a href="/">Home</a>
+            <a href="/profile">Account</a>
+            <a href="/profile">Profile</a>
+            <span>Manage Address</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<div class="container-fluid rounded bg-white mt-2 mb-5">
+  <div class="row">
+    <div class="col-md-3 border-right">
+      <h1 style="display: none;" id="hi">hii</h1>
+      {{!-- Alert Message after Adding Address --}}
+      {{#if addressAdded}}
+      <div style="position: absolute; width: 92%;" class="alert alert-success alert-dismissible fade show " role="alert"
+        id="addressAddedMessage">
+        <strong>{{addressAdded}}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {{/if}}
+
+      <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle" width="150px"
+          src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span
+          class="font-weight-bold">{{user.name}}</span><span class="text-black-50">{{user.username}}</span><span>
+        </span>
+      </div>
+
+      <div>
+        <a href="/profile" type="button" style="width: 100%;" class="text-white btn p-2 badge btn-primary">Profile
+          <i class="fa-solid fa-user"></i></a>
+      </div>
+      <div class="d-flex justify-content-center mt-2 ">
+        <a href="/change-password" style="width: 100%;" type="button"
+          class="text-white btn p-2 badge btn-primary">Change Password
+          <i class="fa-solid fa-lock"></i></a>
+      </div>
+
+
+    </div>
+
+    <div class="col-md-9 col-lg-9 mt-3">
+
+      <div class="row" style="--mdb-gutter-x: 0;">
+        {{#if allAddress}}
+        <h4 class="mb-3 ml-3"><strong>Saved Address</strong></h4>
+        {{#each allAddress}}
+
+        <div class="card border border-light shadow-0 mb-3 mx-3" style="max-width: 18rem;">
+          <div class="card-header">Address <span class="create_index"></span></div>
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h5 class="card-title"><strong class="text-capitalize">{{this.address.name}}</strong></h5>
+
+              <!-- Delet Address Button trigger modal -->
+              <a type="button" title="Delete Address" data-toggle="modal" title="Delete Address"
+                data-target="#exampleModalCenter{{this.address.uid}}">
+                <i class="fa-solid fa-trash text-danger"></i>
+              </a>
+
+
+              {{!-- Modal Pop Up For Address Deletion Confirmation start --}}
+              <div class="modal fade" id="exampleModalCenter{{this.address.uid}}" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Delete Address</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      Are you sure you want to delete <strong class="text-capitalize">{{this.address.name}}</strong>'s address
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary btn-sm btn-rounded" data-dismiss="modal">Close</button>
+                      <button onclick="deleteAddress('{{this.address.uid}}')" type="button"
+                        class="btn btn-danger btn-sm btn-rounded">delete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Modal Pop up to Block User end-->
+
+
+            </div>
+            <span class="card-text">{{this.address.phone}}</span>
+            <p class="card-text m-0">{{this.address.address}}, {{this.address.state}} <br> {{this.address.pincode}}</p>
+
+            <span class="text-capitalize text-primary">{{this.address.location}} address</span>
+          </div>
+        </div>
+        {{/each}}
+        {{else}}
+        <div class="d-flex justify-content-center">
+          <strong>No Saved Address.</strong>
+        </div>
+        {{/if}}
+        <hr class="my-4">
+      </div>
+
+      {{!-- Add address section --}}
+      <h4 class="mb-3"><strong>Add New Address</strong></h4>
+      <form class="needs-validation" action="/add-address" method="post">
+        <div class="row col-md-11 col-sm-12 g-3">
+          <div class="col-12">
+            <label for="firstName" class="form-label">Full name</label>
+            <input type="text" class="form-control" id="firstName" name="name" placeholder="" value="" required>
+            <input type="text" name="userId" value="{{user._id}}" hidden>
+          </div>
+
+
+          <div class="col-12 col-md-6">
+            <label for="email" class="form-label">Email <span class="text-muted"></span></label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="" required>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <label for="text" class="form-label">Phone number <span class="text-muted"></span></label>
+            <input type="text" class="form-control" id="mobile" name="phone" placeholder="" pattern="(7|8|9)\d{9}$"
+              title="Enter a valid phone number,must be a 10 digit number" required>
+
+          </div>
+
+          <div class="col-12">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" class="form-control" id="address" name="address" placeholder="" required>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <label for="state" class="form-label ">State</label>
+            <div>
+              <select name="state" id="state" class="select w-100" required onfocus='this.size=3;' onblur='this.size=1;'
+                onchange='this.size=1; this.blur();'>
+                {{!-- select Option States --}}
+
+                {{!-- <option value="Andhra Pradesh">Andhra Pradesh</option>
+                <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                <option value="Assam">Assam</option>
+                <option value="Bihar">Bihar</option>
+                <option value="Chandigarh">Chandigarh</option>
+                <option value="Chhattisgarh">Chhattisgarh</option>
+                <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+                <option value="Daman and Diu">Daman and Diu</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Lakshadweep">Lakshadweep</option>
+                <option value="Puducherry">Puducherry</option>
+                <option value="Goa">Goa</option>
+                <option value="Gujarat">Gujarat</option>
+                <option value="Haryana">Haryana</option>
+                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                <option value="Jharkhand">Jharkhand</option>
+                <option value="Karnataka">Karnataka</option> --}}
+                <option value="Kerala">Kerala</option>
+
+                {{!-- <option value="Madhya Pradesh">Madhya Pradesh</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Manipur">Manipur</option>
+                <option value="Meghalaya">Meghalaya</option>
+                <option value="Mizoram">Mizoram</option>
+                <option value="Nagaland">Nagaland</option>
+                <option value="Odisha">Odisha</option>
+                <option value="Punjab">Punjab</option>
+                <option value="Rajasthan">Rajasthan</option>
+                <option value="Sikkim">Sikkim</option> --}}
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="Telangana">Telangana</option>
+                <option value="Tripura">Tripura</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="Uttarakhand">Uttarakhand</option>
+                <option value="West Bengal">West Bengal</option>
+              </select>
+            </div>
+          </div>
+
+
+
+          <div class="col-md-6">
+            <label for="zip" class="form-label">Zip</label>
+            <input type="text" class="form-control" id="zip" name="pincode" placeholder="" pattern="[0-9]{6}"
+              title="Enter a valid pincode,must be 6 digit" required>
+          </div>
+          <div class="d-flex justify-content-start">
+            <label for="" class="form-label">Address type</label>
+            <!-- Default radio -->
+            <div class="form-check ml-3">
+              <input class="form-check-input" type="radio" name="location" value="home" id="flexRadioDefault1"
+                checked />
+              <label class="form-check-label" for="flexRadioDefault1">Home</label>
+            </div>
+            <!-- Default checked radio -->
+            <div class="form-check ml-3">
+              <input class="form-check-input" type="radio" name="location" value="work" id="flexRadioDefault2" />
+              <label class="form-check-label" for="flexRadioDefault2">Work</label>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end mt-3">
+            <button class="btn btn-primary btn" type="submit">Add Address</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+<script>
+
+  var divs = document.querySelectorAll('.create_index');
+  for (var i = 0; i < divs.length; ++i) {
+    divs[i].innerHTML = i + 1;
+  }
+
+
+  function deleteAddress(uid) {
+    $.ajax({
+      url: `/delete-address/${uid}`,
+      method: 'get',
+      success: (response) => {
+        console.log('Deleted Addres Successfully')
+          document.getElementById('hi').style.display.block
+          location.reload()
+      }
+    })
+  }
+</script>

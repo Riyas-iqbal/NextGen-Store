@@ -1,0 +1,85 @@
+<div class="text-sm font-weight-bold text-primary ml-3 mb-4">
+    <a href="/admin/home" class="hover-1">Admin </a> <i class="fa-solid fa-angle-right"> </i>
+    <a href="/admin/view-offers" class="hover-1">Category Offers</a> <i class="fa-solid fa-angle-right"> </i>
+    <a href="/admin/add-category-offer" class="hover-1">Add-Offer</a>
+</div>
+
+{{!-- page title --}}
+<h2 class="font-weight-bold m-0 pl-5 hover-3 overflow-hidden ">Add New Category Offer</h2> 
+
+<div class="container d-flex justify-content-center ">
+    <div class="col d-flex justify-content-center pt-4">
+        <div class="card w-75 ali">
+            <div class="card-body">
+                <h5 class="card-title ">Category Offer</h5>
+                <div>
+
+                    {{!-- Add New Offer Form POST Start --}}
+                    <form class="row contact_form mt-3" action="/admin/add-category-offer" method="post" >
+                        <div class="col-md-6">
+
+                            {{!-- Offer Name --}}
+                            <div class="form-group">
+                                <label for="product">Offer Name</label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Offer Name"
+                                    required>
+                            </div>
+
+                            {{!-- Category Select --}}
+                            <div class="form-group">
+                                <label for="brand">Select the Category You want to add offer</label>
+                                <select class="form-select" name="category" required aria-label="Default select example" id="brand">
+                                    <option selected></option>
+                                    {{#each category}}
+                                    <option value="{{this.category}}" class="text-capitalize">{{this.category}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            {{!-- Offer Percentage --}}
+                            <div class="form-group">
+                                <label for="price">Offer in Percentage</label>
+                                <input type="number" class="form-control" autocomplete="off" required min="0"
+                                    id="percentage" oninput="checkPercentage()" name="percentage" placeholder="Percentage">
+                                    <span class="text-danger" id="percentageError" style="display: none;">Offer Percentage should not exceed 40%</span>
+                            </div>
+
+                            {{!-- Max-discount --}}
+                            <div class="form-group">
+                                <label for="max">Max-discount</label>
+                                <input type="number" class="form-control" autocomplete="off" required min="0" id="max"
+                                    name="max_discount" placeholder="Price">
+                            </div>
+
+                        </div>
+
+                        <div class="text-center mt-3">
+                            <button type="Submit" id="submitBtn" class="btn btn-primary ">Submit</button>
+                        </div>
+                    </form>
+                    {{!-- Add New Offer Form POST End --}}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function checkPercentage(){
+        var numbers = /^[0-9]+$/;
+        var data = document.getElementById('percentage').value
+        console.log(data)
+        if(data < 40 && data.match(numbers)){
+            document.getElementById('percentageError').style.display='none'
+            document.getElementById('submitBtn').disabled = false
+        }else{
+            document.getElementById('percentageError').style.display='block'
+            document.getElementById('submitBtn').disabled = true
+        }
+    }
+</script>

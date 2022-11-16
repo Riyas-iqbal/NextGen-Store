@@ -1,0 +1,312 @@
+<div>
+  <section class="h-100 gradient-custom">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-lg-10 col-xl-12">
+          <div class="card" style="border-radius: 10px;">
+            <div class="card-header px-4 py-5">
+              <h5 class="text-muted mb-0"><strong>Thanks for your Order, <span
+                    style="color: #000000;">{{user.name}}</span>!</strong></h5>
+            </div>
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <p class="lead fw-normal mb-0" style="color: #a8729a;">Receipt</p>
+                <p class="small  mb-0">Receipt Voucher : 1KAU9-84UIL</p>
+              </div>
+              {{#each products}}
+              <div class="card shadow-0 border mb-4">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <img src="/product-image/{{this.product._id}}.jpg" class="img-fluid" alt="Phone">
+                    </div>
+                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                      <p class="mb-0 font-weight-bold">{{this.product.name}}</p>
+                    </div>
+                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                      <p class=" mb-0 font-weight-bold">Ram : {{this.product.ram}}</p>
+                    </div>
+                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                      <p class=" mb-0 font-weight-bold">Capacity: {{this.product.storage}}GB</p>
+                    </div>
+                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                      <p class=" mb-0 "><strong>Qty: {{this.quantity}}</strong></p>
+                    </div>
+                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                      <p class=" mb-0"><strong class="format-price">{{this.product.price}}</strong></p>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              {{/each}}
+
+              
+              {{!-- custom stepper order status --}}
+              {{#if stepper.cancelled}}
+
+              {{!-- stepper if order is cancelled --}}
+              <div class="md-stepper-horizontal orange mb-5"
+                style="font-family: 'Open Sans', sans-serif;font-size: 16px; color: #555555;">
+                <div class="md-step active">
+                  <div class="md-step-circle"><i class="fa-solid fa-cart-shopping"></i></div>
+                  <div class="md-step-title">Placed</div>
+                  <div class="md-step-optional">at {{orderDetails.date}}</div>
+                  <div class="md-step-bar-left"></div>
+                  <div class="md-step-bar-right"></div>
+                </div>
+                <div class="md-step active">
+                  <div class="md-step-circle" style="background-color: red;"><i class="fa-solid fa-xmark"></i></div>
+                  <div class="md-step-title">Order Cancelled</div>
+                  <div class="md-step-bar-left"></div>
+                  <div class="md-step-bar-right"></div>
+                </div>
+              </div>
+              {{else}}
+
+              {{!-- stepper showing order status --}}
+              <div class="md-stepper-horizontal orange mb-5"
+                style="font-family: 'Open Sans', sans-serif;font-size: 16px; color: #555555;">
+                <div class="md-step active">
+                  <div class="md-step-circle"><i class="fa-solid fa-clock"></i></div>
+                  <div class="md-step-title">Pending</div>
+                  <div class="md-step-bar-left"></div>
+                  <div class="md-step-bar-right"></div>
+                </div>
+                <div class="md-step {{#if stepper.placed}}active{{/if}}">
+                  <div class="md-step-circle"><i class="fa-solid fa-cart-shopping"></i></div>
+                  <div class="md-step-title">Placed</div>
+                  <div class="md-step-optional">at {{orderDetails.date}}</div>
+                  <div class="md-step-bar-left"></div>
+                  <div class="md-step-bar-right"></div>
+                </div>
+                <div class="md-step {{#if stepper.shipped}}active{{/if}}">
+                  <div class="md-step-circle"><i class="fa-solid fa-truck"></i></div>
+                  <div class="md-step-title">Shipped</div>
+                  <div class="md-step-bar-left"></div>
+                  <div class="md-step-bar-right"></div>
+                </div>
+                <div class="md-step {{#if stepper.delivered}}active{{/if}} done">
+                  <div class="md-step-circle"></div>
+                  <div class="md-step-title">Delivered</div>
+                  <div class="md-step-bar-left"></div>
+                  <div class="md-step-bar-right"></div>
+                </div>
+              </div>
+              
+              {{/if}}
+            
+              <div class="d-flex justify-content-start pt-2">
+                <p class="fw-bold mb-0">Order Details</p>
+                
+              </div>
+
+              <div class="d-flex justify-content-between pt-2">
+                <p class=" mb-0">Payment Method : {{orderDetails.paymentMethod}}</p>  
+                <p class=" mb-0"><span class="fw-bold me-4">Total</span><span class="format-price font-weight-bold">
+                  
+
+                  {{#if orderDetails.coupon}}
+                  {{orderDetails.coupon.oldPrice}}
+                  {{else}}
+                  {{orderDetails.totalAmount}}
+                  {{/if}} 
+                  
+                  </span></p>
+              </div>
+
+              {{#if orderDetails.coupon}}
+              <div class="d-flex justify-content-between pt-2">
+                <p class=" mb-0">Coupon Name : {{orderDetails.coupon.name}}</p>
+                <p class=" mb-0"><span class="fw-bold me-4">Discount</span>- <span class="text-success font-weight-bold">{{orderDetails.coupon.discount}}</span></p>
+              </div>
+              {{/if}}
+
+              <div class="d-flex justify-content-between">
+                <p class=" mb-0">Invoice Date : {{orderDetails.date}}</p>
+                {{!-- <p class=" mb-0"><span class="fw-bold me-4">GST 18%</span> 0</p> --}}
+              </div>
+
+              <div class="d-flex justify-content-between mb-5">
+                <p class=" mb-0">Recepits Voucher : 18KU-62IIK</p>
+                <p class=" mb-0"><span class="fw-bold me-4">Delivery Charges</span> Free</p>
+              </div>
+            </div>
+            <div class="card-footer border-0 px-4 py-5"
+              style="background-color: #a8729a; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+              <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">Total
+                paid : <span class="h2 mb-0 ms-2 format-price">{{orderDetails.totalAmount}}</span></h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+
+
+{{!-- accepts price (using class name) and formats to thousands separator Indian Format--}} 
+<script>
+  var price = document.getElementsByClassName("format-price")
+  for (let i = 0; i < price.length; i++) {
+    var tempPrice = parseFloat(price[i].innerHTML)
+    tempPrice = `₹${tempPrice.toLocaleString('hi')}`
+    price[i].innerHTML = tempPrice
+  }
+</script>
+
+
+
+
+
+
+<style>
+  html {
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    -ms-font-smoothing: antialiased !important;
+  }
+
+  .md-stepper-horizontal {
+    display: table;
+    width: 100%;
+    margin: 0 auto;
+    background-color: #FFFFFF;
+    box-shadow: 0 3px 8px -6px rgba(0, 0, 0, .50);
+  }
+
+  .md-stepper-horizontal .md-step {
+    display: table-cell;
+    position: relative;
+    padding: 24px;
+  }
+
+  .md-stepper-horizontal .md-step:hover,
+  .md-stepper-horizontal .md-step:active {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+
+  .md-stepper-horizontal .md-step:active {
+    border-radius: 15% / 75%;
+  }
+
+  .md-stepper-horizontal .md-step:first-child:active {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .md-stepper-horizontal .md-step:last-child:active {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .md-stepper-horizontal .md-step:hover .md-step-circle {
+    background-color: #757575;
+  }
+
+  .md-stepper-horizontal .md-step:first-child .md-step-bar-left,
+  .md-stepper-horizontal .md-step:last-child .md-step-bar-right {
+    display: none;
+  }
+
+  .md-stepper-horizontal .md-step .md-step-circle {
+    width: 30px;
+    height: 30px;
+    margin: 0 auto;
+    background-color: #999999;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #FFFFFF;
+  }
+
+  .md-stepper-horizontal.green .md-step.active .md-step-circle {
+    background-color: #00AE4D;
+  }
+
+  .md-stepper-horizontal.orange .md-step.active .md-step-circle {
+    background-color: #F96302;
+  }
+
+  .md-stepper-horizontal .md-step.active .md-step-circle {
+    background-color: rgb(33, 150, 243);
+  }
+
+  .md-stepper-horizontal .md-step.done .md-step-circle:before {
+    font-family: 'FontAwesome';
+    font-weight: 100;
+    content: "\f00c";
+  }
+
+  .md-stepper-horizontal .md-step.done .md-step-circle *,
+  .md-stepper-horizontal .md-step.editable .md-step-circle * {
+    display: none;
+  }
+
+  .md-stepper-horizontal .md-step.editable .md-step-circle {
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+  }
+
+  .md-stepper-horizontal .md-step.editable .md-step-circle:before {
+    font-family: 'FontAwesome';
+    font-weight: 100;
+    content: "\f040";
+  }
+
+  .md-stepper-horizontal .md-step .md-step-title {
+    margin-top: 16px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .md-stepper-horizontal .md-step .md-step-title,
+  .md-stepper-horizontal .md-step .md-step-optional {
+    text-align: center;
+    color: rgba(0, 0, 0, .26);
+  }
+
+  .md-stepper-horizontal .md-step.active .md-step-title {
+    font-weight: 600;
+    color: rgba(0, 0, 0, .87);
+  }
+
+  .md-stepper-horizontal .md-step.active.done .md-step-title,
+  .md-stepper-horizontal .md-step.active.editable .md-step-title {
+    font-weight: 600;
+  }
+
+  .md-stepper-horizontal .md-step .md-step-optional {
+    font-size: 12px;
+  }
+
+  .md-stepper-horizontal .md-step.active .md-step-optional {
+    color: rgba(0, 0, 0, .54);
+  }
+
+  .md-stepper-horizontal .md-step .md-step-bar-left,
+  .md-stepper-horizontal .md-step .md-step-bar-right {
+    position: absolute;
+    top: 36px;
+    height: 1px;
+    border-top: 1px solid #DDDDDD;
+  }
+
+  .md-stepper-horizontal .md-step .md-step-bar-right {
+    right: 0;
+    left: 50%;
+    margin-left: 20px;
+  }
+
+  .md-stepper-horizontal .md-step .md-step-bar-left {
+    left: 0;
+    right: 50%;
+    margin-right: 20px;
+  }
+</style>

@@ -1,0 +1,96 @@
+<div class="text-sm font-weight-bold text-primary ml-3 mb-4"><a href="/admin/home" class="hover-1">Admin </a> <i
+    class="fa-solid fa-angle-right"> </i> <a href="/admin/view-category" class="hover-1">Orders</a></div>
+<!-- Begin Page Content -->
+
+
+<h2 class="font-weight-bold mb-3 mt-3 pl-5 hover-3 overflow-hidden ">Order Management</h2>
+
+
+
+<section class="admin-section pt-4" style="">
+  <div class="container px-5 ">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col" class="col-3">Date</th>
+          <th scope="col" class="col-1">Name</th>
+          <th scope="col" class="col-2">Address</th>
+          <th scope="col" class="col-2">Coupon/Offer</th>
+          <th scope="col" class="col-1">Amount</th>
+          <th scope="col" class="col-1">Payment</th>
+          <th scope="col" class="col-2">Status</th>
+          <th>Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each order}}
+        <tr>
+          <td>{{this.date}}</td>
+          <td>{{this.deliveryDetails.name}}<br>
+            {{this.deliveryDetails.phone}}
+          </td>
+          <td>{{this.deliveryDetails.address}} <br>
+            {{this.deliveryDetails.pincode}} <br>
+            {{this.deliveryDetails.state}} <br>
+          </td>
+          <td>
+            {{#if this.coupon}}
+            Coupon : {{this.coupon.name}}
+            Discount : <strong class="text-success">{{this.coupon.discount}}</strong>
+            Original Price : {{this.coupon.oldPrice}}
+            {{else}}
+            <span class="text-secondary">No Coupons Applied</span>
+            {{/if}}
+          </td>
+
+          <td>{{this.totalAmount}}<br>
+
+          </td>
+          <td>{{this.paymentMethod}}</td>
+          {{!-- <td>{{this.status}}</td> --}}
+          <td>
+            <select class="form-select" name="status" id="{{this._id}}">
+              <option value={{this.status}} selected>{{this.status}}</option>
+              <option value="">Pending</option>
+              <option value="">Cancelled</option>
+              <option value="">Placed</option>
+              <option value="">Shipped</option>
+              <option value="">Delivered</option>
+
+            </select>
+
+          </td>
+          <td><button class="btn text-white bg-dark border-0 " onclick="changestatus('{{this._id}}')">SAVE</button></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<script>
+
+  function changestatus(orderId) {
+    let st = document.getElementById(orderId)
+    let stat = st.options[st.selectedIndex].text
+    console.log(stat)
+    $.ajax({
+      url: '/admin/change-order-status',
+      data: {
+        order: orderId,
+        stat: stat
+      },
+      method: 'post',
+      success: (response) => {
+        console.log(response)
+        //document.getElementById(proId).innerHTML=quantity+count
+        //document.getElementById('totalAll').innerHTML=response.totalAmount
+        //document.getElementById('totalAll2').innerHTML=response.totalAmount
+        //document.getElementById(proPrice).innerHTML=response.totalOne
+        //$(proModel).attr("disabled", false);
+      }
+    })
+  }
+
+
+</script>

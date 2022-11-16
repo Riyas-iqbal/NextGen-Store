@@ -1,0 +1,71 @@
+<div class="text-sm font-weight-bold text-primary ml-3 mb-4"><a href="/admin/home" class="hover-1">Admin </a> <i
+        class="fa-solid fa-angle-right"> </i> <a href="/admin/view-offers" class="hover-1">Category Offers</a></div>
+<!-- Begin Page Content -->
+<div class="container-fluid p-0">
+
+    <h2 class="font-weight-bold mb-3 mt-3 pl-5 hover-3 overflow-hidden ">Offer Management</h2>
+
+    {{#if categoryOffers}}
+    <div class="text-end mr-5">
+<a href="/admin/add-category-offer" class="btn btn-primary m-3">Add New Offer</a>
+    </div>
+    <table  class="table align-middle table-hover mb-0 bg-white ">
+        <thead class="bg-light">
+            <tr>
+                <th>Index</th>
+                <th>Title</th>
+                <th>Discount</th>
+                <th class="pl-5">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each categoryOffers}}
+            <tr>
+                <td>
+                    <span class="create_index"></span>
+                </td>
+                <td>
+                    <p class="fw-bold mb-1 text-capitalize">Offer Name : {{this.name}}</p>
+                    <p class="fw-bold mb-1 text-capitalize">Category Name : {{this.category}}</p>
+                </td>
+                <td>
+                    {{!-- <span class="badge badge-success rounded-pill d-inline">Active</span> --}}
+                    <p class="fw-bold mb-1 text-capitalize">Percentage : {{this.percentage}}%</p>
+                    <p class="fw-bold mb-1 text-capitalize">Max-discount : {{this.max_discount}}</p>
+
+                </td>
+                <td>
+                    {{!-- <a type="button" href="/admin/add-offer?name={{this.category}}" id="element" 
+                     title="Edit Category : {{this.category}}" class="badge badge-primary btn btn-sm btn-rounded">
+                        Add Offer
+                    </a> --}}
+                    <a type="button" href="/admin/remove-category-offer/{{this.category}}" id="btnDelete" 
+                     title="Delete Category : {{this.category}}" class="badge badge-warning btn btn-sm btn-rounded">
+                        Remove Offer
+                    </a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    {{else}}
+
+    <div class="text-center">
+        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 40rem;" src="/images/undraw_add_tasks_re_s5yj.svg"
+            alt="...">
+    </div>
+    <div class="d-flex justify-content-center mt-3">
+        <h5 class="text-danger">No Offers Available. <a href="/admin/add-category-offer" class="link-info">Add</a> a Offer</h3>
+    </div>
+
+    {{/if}}
+</div>
+<!-- /.container-fluid -->
+
+
+<script>
+    var divs = document.querySelectorAll('.create_index');
+    for (var i = 0; i < divs.length; ++i) {
+        divs[i].innerHTML = i + 1;
+    }
+</script>

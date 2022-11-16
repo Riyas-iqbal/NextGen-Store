@@ -1,0 +1,236 @@
+<div class="alert alert-primary alert-dismissible fade" style="position: fixed;z-index: 100; top: 50px; right:10px; "
+    id="removedCoupon" role="alert">
+    <strong>Coupon Succesfully deleted <i class="fa-solid fa-square-check"></i> </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+
+
+
+<div class="text-sm font-weight-bold text-primary ml-3 mb-4"><a href="/admin/home" class="hover-1">Admin </a> <i
+        class="fa-solid fa-angle-right"> </i> <a href="/admin/view-coupons" class="hover-1">Coupons</a></div>
+<!-- Begin Page Content -->
+<div class="container-fluid p-0">
+
+    <div class="d-flex justify-content-between">
+        <h2 class="font-weight-bold mb-3 mt-3 pl-5 overflow-hidden text-primary">Coupons Management</h2>
+        <div class="text-center mt-3 mr-5">
+            <a href="" class="btn btn-primary btn-rounded mb-4" data-toggle="modal" data-target="#modalLoginForm">Add
+                New
+                Coupon</a>
+        </div>
+    </div>
+
+    {{!-- Add new coupon form Modal Start--}}
+    <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="/admin/add-coupon" method="post">
+                    <div class="modal-header text-center">
+                        <h4 class="modal-title w-100 font-weight-bold">Add New Coupon</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body mx-3">
+
+                        <div class="coupon p-3 bg-white my-3"
+                            style="background-image: linear-gradient(180deg,#aec2ff 10%,#8a9bcf 100%);">
+                            <div class="row no-gutters">
+                                <div class="col-md-4 border-right">
+                                    <div class="d-flex flex-column align-items-center"><img style="width: 100px;"
+                                            src="/images/nextgen logo black.svg"><span class="d-block"
+                                            id="couponName">coupon name</span><span class="text-black-50">Coupon</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div>
+                                        <div class="d-flex flex-row justify-content-end off">
+                                            <span>FLAT</span>
+                                            <h1 id="couponAmount">100</h1>
+                                        </div>
+                                        <div class="d-flex flex-row justify-content-between off px-3 p-2"><span>Promo
+                                                code:</span><span
+                                                class="border border-success px-3 rounded code">BBB50</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="">
+                            <div class="form-group mb-1">
+                                <label for="coupon" class="form-label"><strong>Coupon Name</strong></label>
+                                <input type="text" name="name" oninput="changeCouponName()" class="form-control"
+                                    id="inputName" placeholder="Coupon Name" onkeydown="return /[a-z]/i.test(event.key)"
+                                    required>
+                            </div>
+                            <div class="form-group mb-1">
+                                <label for="discount" class="form-label"><strong>Discount</strong></label>
+                                <input type="number" name="discount" oninput="changeDiscount()" class="form-control"
+                                    id="discount" placeholder="Discount" required>
+                                <p class="text-danger" style="display: none;" id="amountErrMsg">Max Coupon Amount is
+                                    10,000</p>
+                            </div>
+                            <div class="form-group mb-1">
+                                <label for="description" class="form-label"><strong>Description</strong></label>
+                                <input type="text" name="description" class="form-control" id="description"
+                                    placeholder="Description">
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <span class="text-info">
+                            Coupon code will be generated shortly after you add a coupon
+                        </span>
+                        <div class="form-group mb-0">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary" id="couponSubmitBtn">Add Coupon</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{!-- Add new coupon form Modal End--}}
+
+
+    {{!-- Main Content --}}
+
+    <hr class="hr hr-blurry" />
+
+
+
+    {{#if coupons}}
+
+    <div class="d-flex justify-content-center">
+        <h3 class="mt-2">Available Coupons</h4>
+    </div>
+
+    <div class="container mb-5" title="{{this.description}}">
+
+        <div class="d-flex justify-content-center row">
+            {{#each coupons}}
+            <div class="col-md-5 mt-4 mr-4" id="coupon{{this.coupon_code}}">
+                <div class="coupon p-3 bg-white"
+                    style="background-image: linear-gradient(180deg,#aec2ff 10%,#8a9bcf 100%);">
+                    <div class="row no-gutters">
+                        <div class="col-md-4 border-right">
+                            <div class="d-flex flex-column align-items-center"><img style="width: 100px;"
+                                    src="/images/nextgen logo black.svg"><span
+                                    class="d-block ">{{this.name}}</span><span class="text-black-50">coupon</span></div>
+                        </div>
+                        <div class="col-md-8">
+                            <div>
+                                <div class="d-flex flex-row justify-content-end off">
+                                    <span>FLAT</span>
+                                    <h1>{{this.discount}}</h1>
+                                </div>
+                                <div class="d-flex flex-row justify-content-between off px-3 p-2"><span>Promo
+                                        code:</span><span
+                                        class="border border-success px-3 rounded code">{{this.coupon_code}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2 d-flex justify-content-end">
+                    <a type="button" onclick="deleteCoupon('{{this.coupon_code}}')" class="btn btn-warning">Delete</a>
+                    {{!-- <a type="button" href="/admin/update-coupon/{{this.coupon.code}}"
+                        class="btn btn-primary">Update</a> --}}
+                </div>
+                <hr class="hr hr-blurry" />
+            </div>
+            {{/each}}
+        </div>
+
+    </div>
+
+    {{else}}
+    <div class="text-center">
+        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 40rem;" src="/images/undraw_add_tasks_re_s5yj.svg"
+            alt="...">
+    </div>
+    <div class="d-flex justify-content-center mt-3">
+        <h5 class="text-danger">No Coupons Available. Add a Coupon</h3>
+    </div>
+
+    {{/if}}
+
+
+</div>
+<!-- /.container-fluid -->
+
+
+<style>
+    .hello {
+        background: #F06292 !important
+    }
+
+    .coupon {
+        border-radius: 12px;
+        box-shadow: 5px 8px 10px #d6d5d533
+    }
+
+    .hello {
+        background: rgb(251, 253, 255)
+    }
+
+    .code:hover {
+        background: green;
+        color: #fff;
+        cursor: pointer
+    }
+</style>
+
+<script>
+
+    function deleteCoupon(coupon_code) {
+
+        console.log('delete coupon req received')
+        $.ajax({
+            url: `/admin/delete-coupon/${coupon_code}`,
+            method: 'get',
+            success: (response) => {
+                console.log('succesfully deleted address')
+                document.getElementById(`coupon${coupon_code}`).style.display = 'none'
+                $('#removedCoupon').addClass('show')
+                setTimeout(() => {
+                    $('#removedCoupon').removeClass('show')
+                }, 3000)
+            }
+        })
+    }
+
+    function changeCouponName() {
+        let name = document.getElementById("inputName").value;
+        document.getElementById("couponName").innerHTML = name.toUpperCase();;
+    }
+
+    function changeDiscount() {
+        let discount = document.getElementById('discount').value;
+        if (discount == '') {
+            discount = 100
+            document.getElementById('couponAmount').innerHTML = discount;
+        }
+
+        if (discount > 10000) {
+            discount = 10000
+            document.getElementById('couponAmount').innerHTML = discount;
+            document.getElementById('amountErrMsg').style.display = 'block'
+            document.getElementById("couponSubmitBtn").disabled = true;
+        } else {
+            document.getElementById("couponSubmitBtn").disabled = false;
+            document.getElementById('amountErrMsg').style.display = 'none'
+            document.getElementById('couponAmount').innerHTML = discount;
+
+        }
+    }  
+</script>

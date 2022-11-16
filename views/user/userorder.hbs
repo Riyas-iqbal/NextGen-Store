@@ -1,0 +1,361 @@
+{{!-- razorpay --}}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<form class="needs-validation" id="checkout-form">
+  <div>
+    <section class="h-100 gradient-custom">
+      <div class="container py-5">
+        <div class="row d-flex justify-content-center my-4">
+          <div class="col-md-5 col-lg-4 order-md-last">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+              <span class="text-primary">Order summary</span>
+              {{!-- <span class="badge bg-primary rounded-pill">3</span> --}}
+            </h4>
+            <ul class="list-group mb-3">
+              {{#each products}}
+              <li class="list-group-item d-flex justify-content-between lh-sm">
+                <div>
+                  <h6 class="my-0 text-uppercase">{{this.product.category}}</h6>
+                  <span class="text-dark fs-6">{{this.product.name}}
+                    ({{this.product.ram}}/{{this.product.storage}})</span><br>
+                  <strong class="">x {{this.quantity}}</strong>
+                </div>
+                <strong class="">₹{{this.product.price}}</strong>
+              </li>
+              {{/each}}
+
+
+              <li class="list-group-item d-flex justify-content-between">
+                <span>Total </span>
+                <strong> ₹{{totalAmount}}</strong>
+              </li>
+              <div id="couponDiv" style="display: none;">
+                <li class="list-group-item d-flex justify-content-between bg-light">
+                  <div class="text-success">
+                    <h6 class="my-0">Coupon - <strong id="couponName"></strong></h6>
+                    <small id="CouponCode"></small>
+                  </div>
+                  <span class="text-success">−₹<span id="couponDiscount"></span></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>New Total </span>
+                  <strong>₹<span id="newTotal"></span></strong>
+                </li>
+
+              </div>
+            </ul>
+            <div>
+              {{!-- display all coupon modal start --}}
+
+
+
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle"><strong>Available Coupons</strong></h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row">
+                        {{#each coupons}}
+                        <div style="width: 100%;">
+                          <div class="col-md-12 mt-4 mr-4" id="coupon{{this.coupon_code}}">
+                            <div class="coupon p-3 bg-white"
+                              style="background-image: linear-gradient(180deg,#94afff 10%,#6b82ca 100%);">
+                              <div class="row no-gutters">
+                                <div class="col-md-4 border-right">
+                                  <div class="d-flex flex-column align-items-center"><img style="width: 100px;"
+                                      src="/images/nextgen logo black.svg"><span
+                                      class="d-block "><strong>{{this.name}}</strong></span><span
+                                      class="text-black-50 font-weight-bold">coupon</span>
+                                  </div>
+                                </div>
+                                <div class="col-md-8">
+                                  <div>
+                                    <div class="d-flex flex-row justify-content-end off">
+                                      <span>FLAT</span>
+                                      <h1>{{this.discount}}</h1>
+                                    </div>
+                                    <div class="d-flex flex-row justify-content-between off px-3 p-2"><span>Promo
+                                        code:</span><span
+                                        class="border border-dark px-3 rounded code">{{this.coupon_code}}</span>
+                                      <button onclick="copytext('{{this.coupon_code}}')" tabindex="0" type="button"
+                                        style="border:none; background: none;" class="copy-button"><i
+                                          class="fa-regular fa-copy"></i></button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        {{/each}}
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {{!-- display all coupon modal end --}}
+            </div>
+
+            {{!-- check coupon --}}
+            <div class="input-group mt-4">
+              <input type="text" class="form-control" name="coupon" autocomplete="off" id="couponInputField"
+                oninput="checkCoupon()" placeholder="Enter coupon">
+            </div>
+
+
+
+            <!-- Button trigger modal -->
+            <div class="d-flex justify-content-between mt-2">
+              <div>
+                <strong><span class="text-success" id="couponSuccess"></span></strong>
+                <strong><span class="text-danger" id="couponError"></span></strong>
+              </div>
+              <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                Available coupons
+              </button>
+            </div>
+          </div>
+          <div class="col-md-7 col-lg-8">
+            <h4 class="mb-3"><strong>Billing address</strong></h4>
+
+            <div class="row g-3 mt-5" style="--mdb-gutter-x: 0;">
+
+              <h4 class="mb-3">Payment</h4>
+              <input type="text" name="userId" value="{{user._id}}" hidden>
+              <div class="form-check">
+                <input id="cod" name="paymentMethod" type="radio" class="form-check-input" value="COD" required>
+                <label class="form-check-label fs-5" for="paypal">COD</label>
+              </div>
+              <div class="form-check">
+                <input id="razorpay" name="paymentMethod" type="radio" class="form-check-input" value="RAZORPAY"
+                  required>
+                <label class="form-check-label fs-5" for="razorpay">Razorpay</label>
+              </div>
+              <div class="form-check">
+                <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" value="PAYPAL" required>
+                <label class="form-check-label fs-5" for="paypal">Paypal</label>
+              </div>
+
+              <hr class="my-4">
+
+              {{#if allAddress}}
+              <h4 class="mb-3 mt-3 ml-3">Saved Address</h4>
+              {{#each allAddress}}
+
+              <div class="card border border-light shadow-0 mb-3 mx-3" style="max-width: 18rem;">
+                <div class="card-header">Address <span class="create_index"></span></div>
+                <div class="card-body">
+
+                  <div class="d-flex justify-content-between">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="address" value="{{this.address.uid}}"
+                        id="flexRadioDefault1" required>
+                      <label class="form-check-label mb-3" for="flexRadioDefault1">
+                        <strong class="text-capitalize">{{this.address.name}}</strong>
+                      </label>
+                    </div>
+                  </div>
+                  <span class="card-text">{{this.address.phone}}</span>
+                  <p class="card-text m-0">{{this.address.address}}, {{this.address.state}} <br>
+                    {{this.address.pincode}}</p>
+
+                  <span class="text-capitalize text-primary">{{this.address.location}} address</span>
+                </div>
+              </div>
+              {{/each}}
+              {{else}}
+              <div class="d-flex justify-content-center">
+                <div><strong>No Saved Address.</strong></div>
+                
+              </div>
+
+              <div class="d-flex justify-content-center">
+                <div><strong class="text-danger">Please Add a New</strong></div>
+              </div>
+              
+              {{/if}}
+              <a href="/view-address" class="btn btn-primary">Add New Address</a>
+
+            </div>
+
+            <hr class="my-4">
+            
+            {{#if allAddress}}
+            <button class="w-100 btn btn-primary btn-lg" id="rzp-button1" type="submit">Continue to checkout</button>
+            {{else}}
+            <button class="w-100 btn btn-primary btn-lg" id="rzp-button1" disabled type="submit">Continue to checkout</button>
+            {{/if}}
+
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</form>
+
+<style>
+  .hello {
+    background: #F06292 !important
+  }
+
+  .coupon {
+    border-radius: 12px;
+    box-shadow: 5px 8px 10px #d6d5d533
+  }
+
+  .hello {
+    background: rgb(251, 253, 255)
+  }
+
+  .code:hover {
+    background: green;
+    color: #fff;
+    cursor: pointer
+  }
+
+  .copy-button:focus {
+    color: rgb(255, 255, 255);
+
+  }
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+  integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+
+  $("#checkout-form").submit((e) => {
+    e.preventDefault()
+    $.ajax({
+      url: '/place-order',
+      method: 'post',
+      data: $('#checkout-form').serialize(),
+      success: (response) => {
+        //alert(response)
+        console.log(response)
+        if (response.codSuccess) {
+          location.href = '/status-page'  //order placed msg go to orders
+        } else if (response.razorpay) {
+          console.log('response razorpay worked')
+          razorpayPayment(response)
+        } else if (response.paypal) {
+          location.replace(response.linkto)
+        }
+      }
+    })
+  })
+
+
+
+  function razorpayPayment(order) {
+    console.log("order is", order)
+    var options = {
+      "key": 'rzp_test_y6erlbfvrxarOP', // Enter the Key ID generated from the Dashboard
+      "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      "currency": "INR",
+      "name": "NextGen Smartphones",
+      "description": "Test Transaction",
+      "image": "/images/nextgen logo black.svg",
+
+      "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      "handler": function (response) {
+        console.log(response)
+        verifyPayment(response, order)
+      },
+
+      "prefill": {
+        "name": "Gaurav Kumar",
+        "email": "gaurav.kumar@example.com",
+        "contact": "9999999999"
+      },
+      "notes": {
+        "address": "Razorpay Corporate Office"
+      },
+      "theme": {
+        "color": "#fff"
+      }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+  }
+
+  function verifyPayment(payment, order) {
+    console.log('verify payment called')
+    $.ajax({
+      url: '/verify-payment',
+      method: 'post',
+      data: {
+        payment,
+        order
+      },
+      success: (response) => {
+        if (response.status) {
+          location.href = '/status-page'
+        } else {
+          alert("payment failed")
+        }
+      }
+    })
+  }
+
+  function copytext(coupon_code) {
+    console.log(coupon_code)
+
+    // Copy the text inside the text field
+    navigator.clipboard.writeText(coupon_code);
+  }
+
+  function checkCoupon() {
+    document.getElementById('couponDiv').style.display = 'none'
+    document.getElementById('CouponCode').innerHTML = ''
+    document.getElementById('couponName').innerHTML = ''
+    document.getElementById('couponDiscount').innerHTML = ''
+    document.getElementById('couponSuccess').innerHTML = ''
+    let coupon = document.getElementById('couponInputField').value
+    console.log(coupon)
+    if (coupon.length == 5) {
+
+      $.ajax({
+        url: '/verify-coupon',
+        method: 'post',
+        data: {
+          coupon_code: coupon
+        },
+        success: (response) => {
+          if (response) {
+            document.getElementById('couponSuccess').innerHTML = `Coupon Applied FLAT ${response.discount}/- OFF `
+            document.getElementById('couponDiv').style.display = 'block'
+            document.getElementById('CouponCode').innerHTML = response.coupon_code
+            document.getElementById('couponName').innerHTML = response.coupon_name
+            document.getElementById('couponDiscount').innerHTML = response.discount
+            document.getElementById('newTotal').innerHTML = response.new_price
+            console.log(response)
+          } else{
+            document.getElementById('couponError').innerHTML = 'Invalid Coupon Code'
+          }
+        }
+      })
+
+    } else if (coupon.length > 5 || coupon.length < 5) {
+      document.getElementById('couponError').innerHTML = null
+      console.log('coupon length != 5')
+    } else {
+      console.log('!!!! exception')
+    }
+  }
+
+
+
+</script>

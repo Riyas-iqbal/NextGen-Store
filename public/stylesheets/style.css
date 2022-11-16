@@ -1,0 +1,93 @@
+
+
+.ng-product-head{
+    font-weight: 700;
+}
+
+.text-hover-black{
+    color: #007bff !important;
+}
+
+.text-hover-black:hover{
+    color: rgb(15, 155, 255) !important;
+}
+
+.form-outline .form-control {
+    min-height: auto;
+    padding: 0.33em 0.75em;
+    border: 0;
+    background: #bfa1ff05;
+    transition: all .2s linear;
+}
+
+
+
+.hover-3 {
+    --c: #4e73df; /* the color  */
+    --h: 1.2em;   /* the height */
+    
+    line-height: var(--h);  
+    color: #0000;
+    overflow: hidden;
+    text-shadow: 
+      0 calc(-1*var(--h)*var(--_i,0)) var(--c), 
+      0 calc(var(--h)*(1 - var(--_i,0))) #fff;
+    background: 
+      linear-gradient(var(--c) 0 0) no-repeat
+      calc(200% - var(--_i, 0) * 100%) 100% / 200% calc(100% * var(--_i, 0) + .08em);
+    transition: .3s calc(var(--_i, 0) * .3s), background-position .3s calc(.3s - calc(var(--_i, 0) * .3s));
+  }
+  .hover-3:hover {
+    --_i: 1;
+  }
+  
+  .hover-2 {
+    --h: 1.2em;   /* the height */
+    
+    line-height: var(--h);
+    color: #0000;
+    text-shadow: 
+      0 calc(-1*var(--_t,0em)) #000, 
+      0 calc(var(--h) - var(--_t,0em)) #1095c1;
+    overflow: hidden;
+    transition: .3s;
+  }
+  .hover-2:hover {
+    --_t: var(--h);
+  }
+
+   
+.hover-1 {
+    background-image: linear-gradient(to right,
+            #54b3d6,
+            #54b3d6 50%,
+            #000 50%);
+    background-size: 200% 100%;
+    background-position: -100%;
+    display: inline-block;
+    padding: 5px 0;
+    position: relative;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s ease-in-out;
+}
+
+.hover-1:before {
+    content: '';
+    background: #54b3d6;
+    display: block;
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    transition: all 0.3s ease-in-out;
+}
+
+.hover-1:hover {
+    background-position: 0;
+}
+
+.hover-1:hover::before {
+    width: 100%;
+}

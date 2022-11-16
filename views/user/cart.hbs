@@ -1,0 +1,443 @@
+<div>
+  <section class="h-100 gradient-custom">
+    <div class="container py-5">
+      {{#if products}}
+      <div class="row d-flex justify-content-center my-4">
+        <div class="col-12 col-md-8">
+          <div class="card mb-4">
+            <div class="card-header py-3 d-flex justify-content-between">
+              <h5 class="mb-0">Cart - 2 items</h5>
+              <div>
+                <a type="button" data-toggle="modal"
+                  data-target="#emptyCartModal" class="btn btn-danger mr-auto text-white" title="Remove all items from cart">Empty Cart</a>
+                <!-- Block User Button trigger modal -->
+
+                <!-- Modal Pop up to Block User start-->
+                <div class="modal fade" id="emptyCartModal" tabindex="-1" role="dialog"
+                  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle"><strong>Empty Cart</strong></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        Click <strong>'Confirm'</strong> if you want to remove all the products from your Cart
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-primary btn-rounded"
+                          data-dismiss="modal">Close</button>
+                        <a href="/empty-cart" class="btn btn-sm btn-danger btn-rounded"
+                          data-bs-toggle="tooltip" data-bs-placement="left" title="Remove all items from cart">
+                          Confirm
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Modal Pop up to Block User end-->
+
+
+              </div>
+            </div>
+            <div class="card-body">
+              <!-- Single item -->
+              {{#each products}}
+              <div class="row">
+                <div class=" col-12 col-lg-3 col-md-12 mb-4 mb-lg-0">
+                  <!-- Image -->
+                  <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
+                    <img src="/product-image/{{this.product._id}}.jpg" class="w-100" alt="Blue Jeans Jacket" />
+                    <a href="#!">
+                      <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+                    </a>
+                  </div>
+                  <!-- Image -->
+                </div>
+
+                <div class="col-6 col-lg-5 col-md-6 mb-4 mb-lg-0">
+                  <!-- Data -->
+                  <p><strong>{{this.product.name}}</strong></p>
+                  Category:<p>{{this.product.category}}</p>
+                  <p>Ram: {{this.product.ram}}</p>
+                  <p>Storage: {{this.product.storage}}</p>
+                  <button class="btn btn-primary btn-sm me-1 mb-2" id="removebtn" title="Remove item from cart"
+                    onclick="removeItem('{{this._id}}','{{this.product._id}}','{{this.product.model}}')"
+                    title="Remove item">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                  {{!-- data-mdb-toggle="tooltip" --}}
+                  <button class="btn btn-danger btn-sm mb-2" title="Move to the wish list">
+                    <i class="fas fa-heart"></i>
+                  </button>
+                  <!-- Data -->
+                </div>
+
+                <div class="col-6 col-lg-4 col-md-6 mb-4 mb-lg-0">
+                  <!-- Quantity -->
+                  <div class="d-flex mb-4" style="max-width: 300px">
+                    {{!-- {{#if this.quantity}} --}}
+                    <button class="btn btn-primary px-1 me-2  btn-plus-minus" id="{{this.product.category}}"
+                      onclick="changeQuantityMinus('{{this._id}}','{{this.product._id}}','{{../user._id}}','{{this.product.price}}',{{this.product.category}},-1)">
+                      <i class="fas fa-minus"></i>
+                    </button>
+
+                    <div class="form-outline">
+
+                      <span id="{{this.product._id}}" class="form-control custom-input">{{this.quantity}}</span>
+                    </div>
+
+                    <button class="btn btn-primary px-1 ms-2 btn-plus-minus"
+                      onclick="changeQuantityPlus('{{this._id}}','{{this.product._id}}','{{../user._id}}','{{this.product.price}}',{{this.product.category}},1)">
+                      <i class="fas fa-plus"></i>
+                    </button>
+                  </div>
+                  <!-- Quantity -->
+
+                  <!-- Price -->
+                  <p class="text-start ">
+
+                    <strong id="{{this.product.price}}" class="priceofproduct">{{this.product.price}}</strong>
+                  </p>
+                  <!-- Price -->
+
+                </div>
+
+              </div>
+              <hr class="my-4" />
+              {{/each}}
+
+
+              <!-- Single item -->
+
+
+
+              <!-- Single item -->
+
+              <!-- Single item -->
+            </div>
+          </div>
+          <div class="card mb-4">
+            <div class="card-body">
+              <p><strong>Expected shipping delivery</strong></p>
+              <p class="mb-0">12.10.2020 - 14.10.2020</p>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="card mb-4">
+            <div class="card-header py-3">
+              <h5 class="mb-0">PRICE DETAILS</h5>
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                  Subtotal
+                  <span><span id="totalAll" class="priceofproduct">{{totalAmount}}</span></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                  Shipping
+                  <span></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                  <div>
+                    <strong>Total amount</strong>
+                    <strong>
+                      <p class="mb-0">(including of tax.)</p>
+                    </strong>
+                  </div>
+                  <span><span id="totalAll2" class="fw-bold priceofproduct">{{totalAmount}}</span></span>
+                </li>
+              </ul>
+              <a href="/place-order" class=" btn btn-primary text-center w-75 fs-4 btn-lg btn-block">
+                <b>Place order</b>
+              </a>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      {{else}}
+      <div class="row d-flex justify-content-center my-4">
+        <div class="card border-0" style="height: 37rem; width: 35rem;">
+          <img class="card-img-top" src="/images/emptycart.png" alt="Card image cap">
+        </div>
+      </div>
+      {{/if}}
+
+    </div>
+  </section>
+</div>
+
+<script>
+
+  function changeQuantityPlus(cartId, proId, userId, proPrice, proModel, count) {
+    let quantity = parseInt(document.getElementById(proId).innerHTML)
+    console.log(quantity)
+    count = parseInt(count)
+    console.log(userId)
+    $.ajax({
+      url: '/change-product-quantity',
+      data: {
+        user: userId,
+        cart: cartId,
+        product: proId,
+        count: count,
+        quantity: quantity
+      },
+      method: 'post',
+      success: (response) => {
+        console.log(response)
+        document.getElementById(proId).innerHTML = quantity + count
+        document.getElementById('totalAll').innerHTML = `₹${response.totalAmount.toLocaleString('hi')}`
+        document.getElementById('totalAll2').innerHTML = `₹${response.totalAmount.toLocaleString('hi')}`
+        document.getElementById(proPrice).innerHTML = `₹${response.totalOne.toLocaleString('hi')}`
+        $(proModel).attr("disabled", false);
+      }
+    })
+  }
+  function changeQuantityMinus(cartId, proId, userId, proPrice, proModel, count) {
+    let quantity = parseInt(document.getElementById(proId).innerHTML)
+    count = parseInt(count)
+    console.log(userId)
+    $.ajax({
+      url: '/change-product-quantity',
+      data: {
+        user: userId,
+        cart: cartId,
+        product: proId,
+        count: count,
+        quantity: quantity
+      },
+      method: 'post',
+      success: (response) => {
+        if (response.Nothing) {
+          $(proModel).attr("disabled", true);
+        } else {
+          if (quantity == 2) {
+            $(proModel).attr("disabled", true);
+          } else {
+            $(proModel).attr("disabled", false);
+          }
+          console.log(response)
+          document.getElementById(proId).innerHTML = quantity + count
+          document.getElementById('totalAll').innerHTML = `₹${response.totalAmount.toLocaleString('hi')}`
+          document.getElementById('totalAll2').innerHTML = `₹${response.totalAmount.toLocaleString('hi')}`
+          document.getElementById(proPrice).innerHTML = `₹${response.totalOne.toLocaleString('hi')}`
+        }
+
+      }
+    })
+  }
+  function removeItem(cartId, proId, proModel) {
+    if (confirm("Are you want to delete " + proModel) == true) {
+      $.ajax({
+        url: '/remove-item',
+        data: {
+          cart: cartId,
+          product: proId
+        },
+        method: 'post',
+        success: (response) => {
+          location.reload()
+        }
+
+      })
+    } else {
+
+    }
+
+  }
+
+    //const quantityinputbox=document.getElementById('form1')
+    //if(quantityinputbox.value==='1'){
+    //    $('#minusbtn').prop("disabled", true)
+    //}else{
+    //    $('#minusbtn').prop("disabled", false)
+    //}
+
+
+
+</script>
+
+<script>
+  window.addEventListener('load', (event) => {
+    console.log('page is fully loaded');
+    var price = document.getElementsByClassName("priceofproduct")
+    for (let i = 0; i < price.length; i++) {
+      var tempPrice = parseFloat(price[i].innerHTML)
+      tempPrice = `₹${tempPrice.toLocaleString('hi')}`
+      price[i].innerHTML = tempPrice
+    }
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{!--
+<!-- Shopping Cart Section Begin -->
+<section class="shopping-cart spad">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="shopping__cart__table">
+          <table>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="product__cart__item">
+                  <div class="product__cart__item__pic">
+                    <img src="img/shopping-cart/cart-1.jpg" alt="">
+                  </div>
+                  <div class="product__cart__item__text">
+                    <h6>T-shirt Contrast Pocket</h6>
+                    <h5>$98.49</h5>
+                  </div>
+                </td>
+                <td class="quantity__item">
+                  <div class="quantity">
+                    <div class="pro-qty-2">
+                      <input type="text" value="1">
+                    </div>
+                  </div>
+                </td>
+                <td class="cart__price">$ 30.00</td>
+                <td class="cart__close"><i class="fa fa-close"></i></td>
+              </tr>
+              <tr>
+                <td class="product__cart__item">
+                  <div class="product__cart__item__pic">
+                    <img src="img/shopping-cart/cart-2.jpg" alt="">
+                  </div>
+                  <div class="product__cart__item__text">
+                    <h6>Diagonal Textured Cap</h6>
+                    <h5>$98.49</h5>
+                  </div>
+                </td>
+                <td class="quantity__item">
+                  <div class="quantity">
+                    <div class="pro-qty-2">
+                      <input type="text" value="1">
+                    </div>
+                  </div>
+                </td>
+                <td class="cart__price">$ 32.50</td>
+                <td class="cart__close"><i class="fa fa-close"></i></td>
+              </tr>
+              <tr>
+                <td class="product__cart__item">
+                  <div class="product__cart__item__pic">
+                    <img src="img/shopping-cart/cart-3.jpg" alt="">
+                  </div>
+                  <div class="product__cart__item__text">
+                    <h6>Basic Flowing Scarf</h6>
+                    <h5>$98.49</h5>
+                  </div>
+                </td>
+                <td class="quantity__item">
+                  <div class="quantity">
+                    <div class="pro-qty-2">
+                      <input type="text" value="1">
+                    </div>
+                  </div>
+                </td>
+                <td class="cart__price">$ 47.00</td>
+                <td class="cart__close"><i class="fa fa-close"></i></td>
+              </tr>
+              <tr>
+                <td class="product__cart__item">
+                  <div class="product__cart__item__pic">
+                    <img src="img/shopping-cart/cart-4.jpg" alt="">
+                  </div>
+                  <div class="product__cart__item__text">
+                    <h6>Basic Flowing Scarf</h6>
+                    <h5>$98.49</h5>
+                  </div>
+                </td>
+                <td class="quantity__item">
+                  <div class="quantity">
+                    <div class="pro-qty-2">
+                      <input type="text" value="1">
+                    </div>
+                  </div>
+                </td>
+                <td class="cart__price">$ 30.00</td>
+                <td class="cart__close"><i class="fa fa-close"></i></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="continue__btn">
+              <a href="#">Continue Shopping</a>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="continue__btn update__btn">
+              <a href="#"><i class="fa fa-spinner"></i> Update cart</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="cart__discount">
+          <h6>Discount codes</h6>
+          <form action="#">
+            <input type="text" placeholder="Coupon code">
+            <button type="submit">Apply</button>
+          </form>
+        </div>
+        <div class="cart__total">
+          <h6>Cart total</h6>
+          <ul>
+            <li>Subtotal <span>$ 169.50</span></li>
+            <li>Total <span>$ 169.50</span></li>
+          </ul>
+          <a href="#" class="primary-btn">Proceed to checkout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Shopping Cart Section End --> --}}

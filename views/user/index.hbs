@@ -1,0 +1,325 @@
+
+ {{!-- product added to wishlist Notification --}}
+<div class="alert alert-primary alert-dismissible fade" style="position: fixed;z-index: 100; top:10px; right:10px; "
+    id="messageScript" role="alert">
+    <strong>Item Added to <a href="/wishlist">Wishlist</a> <i class="fa-solid fa-square-check"></i> </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+{{!-- product already in wishlist Notification --}}
+<div class="alert alert-danger alert-dismissible fade" style="position: fixed;z-index: 100; top:10px; right:10px; "
+    id="messageExist" role="alert">
+    <strong>Item Already in <a class="text-danger" href="/wishlist">Wishlist</a> <i
+            class="fa-solid fa-square-check"></i> </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+
+
+<!-- Banner Section Begin -->
+<section class="hero">
+    <div class="hero__slider owl-carousel">
+        <div class="hero__items set-bg" data-setbg="/banner/banner1.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-5 col-lg-7 col-md-8">
+                        <div class="hero__text">
+                            <h6>{{banner.title1}}</h6>
+                            <h2>{{banner.name1}}</h2>
+                            <p>{{banner.description1}}</p>
+                            <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
+                            <div class="hero__social">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-pinterest"></i></a>
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero__items set-bg" data-setbg="/banner/banner2.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-5 col-lg-7 col-md-8">
+                        <div class="hero__text">
+                            <h6>{{banner.title2}}</h6>
+                            <h2>{{banner.name2}}</h2>
+                            <p>{{banner.description2}}</p>
+                            <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
+                            <div class="hero__social">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-pinterest"></i></a>
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Banner Section End -->
+
+<section class="shop spad">
+    <div class="container" >
+        <h2 class="fw-bold mb-5">New Products</h2>
+        <div class="row">
+            <div class="col-lg-9" >
+                <div class="row">
+                    {{#each newProducts}}
+                    <div class="col-lg-4 col-md-6 col-sm-6" title="View {{this.name}}">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg" style="cursor:pointer"
+                                onclick="document.location='/product-details?id={{this._id}}'"
+                                style="background-size: 15rem;" data-setbg="/product-image/{{this._id}}.jpg">
+                            </div>
+                            <div class="product__item__text">
+                                <h6 class="text-capitalize">{{this.name}}</h6>
+                                <a href="/add-to-cart/{{this._id}}" title="Add {{this.name}} to Cart" class="add-cart">+
+                                    Add To Cart</a>
+                                {{!-- rating --}}
+                                {{!-- <div class="rating">
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div> --}}
+                                <h6>{{this.ram}}GB Ram | {{this.storage}}GB Storage </h6>
+                                <div class="d-flex justify-content-between">
+                                    <h5 class="priceofproduct">{{this.price}}</h5>
+
+                                    {{#if this.wishlist}}
+                                    <button type="button" style="background: none; border: none; color: rgb(255, 0, 0);"
+                                        class="mr-3" onclick="addToWishlist('{{this._id}}')" title="Add to Wishlist  ">
+                                        <i style="font-size: large;" class="fa-solid fa-heart"></i>
+                                    </button>
+                                    {{else}}
+                                    <button type="button" class="mr-3 wishlist-color" id="wishlistIcon{{this._id}}"
+                                        onclick="addToWishlist('{{this._id}}')" title="Add to Wishlist  ">
+                                        <i style="font-size: large;" class="fa-solid fa-heart"></i>
+                                    </button>
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- New Products Section End -->
+
+<hr class="hr hr-blurry m-0" />
+
+<!-- Products Section Begin -->
+<div class="container-fluid px-0" id="products">
+    <section style="background-color: #eee;">
+        <div class="container py-5">
+            <div class="d-flex justify-content-between mb-4">
+                <h2 class="fw-bold">All Products</h2>
+                {{!-- Bootstrap dropdown Button --}}
+                {{!-- <div class="dropdown">
+                    <a class="btn btn-primary btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                        data-mdb-toggle="dropdown" aria-expanded="false">
+                        Select Category
+                    </a>
+
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" disabled href="">All Products</a></li>
+                        {{#each category}}
+                        <li><a class="dropdown-item" href="">{{this.category}}</a></li>
+                        {{/each}}
+
+                    </ul>
+                </div> --}}
+            </div>
+
+            <div class="row justify-content-center">
+                {{#each products}}
+                <div class="col-md-4 col-lg-3 col-xl-3">
+                    <a href="/product-details?id={{this._id}}">
+                        <div class="card text-black">
+                            <div class="bg-image hover-overlay hover-zoom ripple">
+                                <img class="px-5 pt-4 mb-3 card-img-top" src="/product-image/{{this._id}}.jpg"
+                                    alt="Smartphone Image" />
+                            </div>
+                            <div class="card-body pt-0">
+                                {{!-- <div class="text-center">
+                                    <h5 class="card-title">Believing is seeing</h5>
+                                    <p class="text-muted mb-4">Apple pro display XDR</p>
+                                </div> --}}
+                                <div>
+                                    <div class="d-flex justify-content-center">
+                                        <h4 class="ng-product-head fw-bold">{{this.name}}</h4>
+                                    </div>
+                                    <div class="d-flex justify-content-between total font-weight-bold">
+                                        <span class="fs-4 text">Price</span><span
+                                            class=" fs-4 text">{{this.price}}</span>
+                                    </div>
+                                </div>
+                                {{!-- <div class="d-flex justify-content-between total font-weight-bold">
+                                    <span>Total</span><span>$7,197.00</span>
+                                </div> --}}
+                                <div class="d-flex flex-row jutify-content-center mt-3">
+                                    <button type="button" class="btn btn-sm btn-primary" data-mdb-ripple-color="dark">
+                                        Add to Cart
+                                    </button>
+                                    <button type="button" class="btn btn-dark btn-sm flex-fill ms-1">Buy now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </section>
+</div>
+<!--All Products Section Begin -->
+
+
+<!-- Categories Section Begin -->
+<section class="categories spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="categories__text">
+                    <h2>Apple<br /> <span>IPhone 14 Pro </span> <br /> A15 Bionic Chip</h2>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="categories__hot__deal">
+                    <img src="/images/iphone13pro-removebg-preview.png" alt="">
+                    <div class="hot__deal__sticker">
+                        <span>Sale Of</span>
+                        <h5>69,900</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 offset-lg-1">
+                <div class="categories__deal__countdown">
+                    <span>Deal Of The Week</span>
+                    <h2>Multi-pocket Chest Bag Black</h2>
+                    <div class="categories__deal__countdown__timer" id="countdown">
+                        <div class="cd-item">
+                            <span>3</span>
+                            <p>Days</p>
+                        </div>
+                        <div class="cd-item">
+                            <span>1</span>
+                            <p>Hours</p>
+                        </div>
+                        <div class="cd-item">
+                            <span>50</span>
+                            <p>Minutes</p>
+                        </div>
+                        <div class="cd-item">
+                            <span>18</span>
+                            <p>Seconds</p>
+                        </div>
+                    </div>
+                    <a href="#" class="primary-btn">Shop now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Categories Section End -->
+
+<!-- Instagram Section Begin -->
+<section class="instagram spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="instagram__pic">
+                    <div class="instagram__pic__item set-bg" data-setbg="/images/InstagramPost1.png"></div>
+                    <div class="instagram__pic__item set-bg" data-setbg="/images/InstagramPost2.png"></div>
+                    <div class="instagram__pic__item set-bg" data-setbg="/images/InstagramPost3.png"></div>
+                    <div class="instagram__pic__item set-bg" data-setbg="/images/InstagramPost4.png"></div>
+                    <div class="instagram__pic__item set-bg" data-setbg="/images/InstagramPost5.png"></div>
+                    <div class="instagram__pic__item set-bg" data-setbg="/images/InstagramPost6.png"></div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="instagram__text">
+                    <h2>Instagram</h2>
+                    <p>The Future in Your Hands. Follow Us on Instagram
+                        <br>
+                        Get the best deals | #1 Smartphone Store in India
+                    </p>
+                    <h3>#Nextgen</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Instagram Section End -->
+
+<style>
+    .wishlist-color {
+        background: none;
+        border: none;
+        color: rgb(149, 146, 146);
+    }
+
+    .wishlist-color:hover {
+        background: none;
+        border: none;
+        color: rgb(255, 0, 0);
+    }
+
+    .color-red {
+        color: rgb(255, 0, 0);
+    }
+</style>
+
+{{!-- Alert Message showing that the selected Product was added to wishlist --}}
+<script>
+    function addToWishlist(productId) {
+        console.log(productId)
+        $.ajax({
+            url: `/add-to-wishlist/${productId}`,
+            method: 'get',
+            success: (response) => {
+                if (response.exist) {
+                    $('#messageExist').addClass('show')
+                    setTimeout(() => {
+                        $('#messageExist').removeClass('show')
+                    }, 2000)
+                } else {
+                    $('#messageScript').addClass('show')
+                    $('#wishlistIcon' + productId).addClass('color-red')
+                    setTimeout(() => {
+                        $('#messageScript').removeClass('show')
+                    }, 2000)
+                }
+            }
+        })
+    }
+</script>
+{{!-- function to change price(string) to thousands separator format ( 125000 => ₹1,25,000 ) by fetching the element
+using class which will return an array --}}
+<script>
+    // window.addEventListener('load', (event) => {
+    console.log('page is fully loaded');
+    var price = document.getElementsByClassName("priceofproduct")
+    for (let i = 0; i < price.length; i++) {
+        var tempPrice = parseFloat(price[i].innerHTML)
+        tempPrice = `₹${tempPrice.toLocaleString('hi')}`
+        price[i].innerHTML = tempPrice
+    }
+   // });
+</script>

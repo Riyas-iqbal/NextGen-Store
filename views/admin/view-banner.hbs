@@ -1,0 +1,108 @@
+<div class="text-sm font-weight-bold text-primary ml-3 mb-4">
+    <a href="/admin/home" class="hover-1">Admin </a> <i class="fa-solid fa-angle-right"> </i>
+    <a href="/admin/view-banner" class="hover-1">Banner</a>
+</div>
+
+{{!-- page title --}}
+<h2 class="font-weight-bold m-0 pl-5 hover-3 overflow-hidden ">Manage Banners</h2>
+
+<div class="container d-flex justify-content-center ">
+    <div class="col d-flex justify-content-center pt-4">
+        <div class="card w-100">
+            <div class="card-body">
+                <h5 class="card-title ">Update Banner</h5>
+                <div>
+
+                    {{!-- Add New Offer Form POST Start --}}
+                    <form class="row contact_form mt-3" enctype="multipart/form-data" action="/admin/update-banner" method="post">
+                        <div class="col-md-6">
+                            <h3>Banner 1</h3>
+
+                            {{!-- Banner title --}}
+                            <div class="form-group">
+                                <label for="title">Banner Title</label>
+                                <input type="text" class="form-control" id="title" name="title1" placeholder="Banner title" value="{{banner.title1}}"
+                                    required>
+                            </div>
+
+                            {{!-- Banner Name --}}
+                            <div class="form-group">
+                                <label for="bannerName">Banner Name</label>
+                                <input type="text" class="form-control" id="bannerName" name="name1" placeholder="Banner Name" value="{{banner.name1}}"
+                                    required>
+                            </div>
+
+                            {{!-- Banner description --}}
+                            <div class="form-group">
+                                <label for="Bannerdescription">Banner Description</label>
+                                <input type="text" class="form-control" id="Bannerdescription" name="description1" value="{{banner.description1}}"
+                                 placeholder="Banner Description" required>
+                            </div>
+
+                            {{!-- Max-discount --}}
+                            <div class="form-group">
+                                <label for="formFileLg" class="form-label "><small>Select Main Banner</small>
+                                </label>
+                                <input required name="image1" class="form-control form-control-lg" id="formFileLg"
+                                    type="file" onchange="viewImage(event)"/>
+                                <img src="/banner/banner1.jpg" style="width: 80%;"
+                                    class="img-fluid border border-primary mt-5" id="imgUpdate">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <h3>Banner 2</h3>
+                            
+                            {{!-- Banner title --}}
+                            <div class="form-group">
+                                <label for="title2">Banner Title</label>
+                                <input type="text" class="form-control" id="title2" name="title2" placeholder="Banner title" value="{{banner.title2}}"
+                                    required>
+                            </div>
+
+                            {{!-- Banner Name --}}
+                            <div class="form-group">
+                                <label for="bannerName2">Banner Name</label>
+                                <input type="text" class="form-control" id="bannerName2" name="name2" placeholder="Banner Name" value="{{banner.name2}}"
+                                    required>
+                            </div>
+
+                            {{!-- Banner description --}}
+                            <div class="form-group">
+                                <label for="Bannerdescription2">Banner Description</label>
+                                <input type="text" class="form-control" id="Bannerdescription2" name="description2"  value="{{banner.description2}}"
+                                placeholder="Banner Description" required>
+                            </div>
+
+                            {{!-- Max-discount --}}
+                            <div class="form-group">
+                                <label for="formFileLg2" class="form-label "><small>Select Sub Banner</small>
+                                </label>
+                                <input required name="image2" class="form-control form-control-lg" id="formFileLg2"
+                                    type="file" onchange="viewImage1(event)"/>
+                                <img src="/banner/banner2.jpg" style="width: 80%;"
+                                    class="img-fluid border border-primary mt-5" id="imgUpdate2">
+                            </div>
+                            
+                        </div>
+
+                        <div class="text-end mt-3">
+                            <button type="Submit" id="submitBtn" class="btn btn-lg m-5 btn-primary ">Submit</button>
+                        </div>
+                    </form>
+                    {{!-- Add New Offer Form POST End --}}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function viewImage(event) {
+        document.getElementById('imgUpdate').src = URL.createObjectURL(event.target.files[0])
+    }
+    function viewImage1(event) {
+        document.getElementById('imgUpdate2').src = URL.createObjectURL(event.target.files[0])
+    }
+</script>

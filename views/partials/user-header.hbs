@@ -1,0 +1,119 @@
+<!-- Offcanvas Menu Begin -->
+<div class="offcanvas-menu-overlay">
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__option">
+            <div class="offcanvas__links">
+                <a href="#">Sign in</a>
+                {{!-- <a href="#">FAQs</a> --}}
+            </div>
+            <div class="offcanvas__top__hover">
+                <span>Contact Me<i class="arrow_carrot-down"></i></span>
+                <ul>
+                    <li><a href="">Instagram</a></li>
+                    <li>EUR</li>
+                    <li>USD</li>
+                </ul>
+            </div>
+        </div>
+        <div class="offcanvas__nav__option">
+            <a href="#" class="search-switch"><img src="/img/icon/search.png" alt=""></a>
+            <a href="#"><img src="/img/icon/heart.png" alt=""></a>
+            <a href="#"><img src="/img/icon/cart.png" alt=""> <span>0</span></a>
+            <div class="price">$0.00</div>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+        <div class="offcanvas__text">
+            <p>NextGen Smartphones By Riyas Iqbal</p>
+            <a href="/admin">.</a>
+        </div>
+    </div>
+</div>
+<!-- Offcanvas Menu End -->
+
+<!-- Header Section Begin -->
+<header class="header">
+    <div class="header__top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-7">
+                    <div class="header__top__left">
+                        <a href="/admin" target="_blank">
+                            <p>NextGen Smartphones By Riyas Iqbal</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-5">
+
+                    <div class="header__top__right">
+                        <div class="header__top__links">
+                            {{#if userlogin}}
+                            <a href="/profile">{{userlogin.name}}</a>
+                            <a href="/logout">Log Out</a>
+                            {{else}}
+                            <a href="/login">Log In</a>
+                            {{/if}}
+                            {{!-- <a href="#">FAQs</a> --}}
+                        </div>
+                        <div class="header__top__hover">
+                            <span>Contact Me<i class="arrow_carrot-down"></i></span>
+                            <ul style="background: rgb(0, 0, 0);">
+                                <li><a class="header__menu " style="" target="_blank" href="https://www.linkedin.com/in/riyas-iqbal-044487247/">Linkdln</a></li>
+                                <li><a target="_blank" href="https://www.instagram.com/riyas_iqbal_/">Instagram</a></li>
+                                <li><a target="_blank" href="https://twitter.com/riyasiqbal10">Twitter</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3">
+                <div class="header__logo p-0">
+                    <a href="/"><img src="/images/nextgen logo black.svg" alt=""></a>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <nav class="header__menu mobile-menu">
+                    <ul>
+                        <li class="{{#if homeActive}}active{{/if}}"><a href="/">Home</a></li>
+                        <li class="{{#if exploreActive}}active{{/if}}"><a href="/explore">Explore</a></li>
+                        <li class="{{#if profileActive}}active{{/if}}"><a href="#">Account</a>
+                            <ul class="dropdown">
+                                <li><a href="/profile">Profile</a></li>
+                                <li><a href="/view-orders">Orders</a></li>
+                                <li><a href="/view-address">Address</a></li>
+
+                            </ul>
+                        </li>
+                        <li class="{{#if cartActive}}active{{/if}}"><a href="/cart  ">Cart</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3 col-md-3"> 
+                <div class="header__nav__option">
+                    <a href="#" class="search-switch"><img src="/img/icon/search.png" alt=""></a>
+                    <a href="/wishlist" style="text-decoration: none;"><i class="fa-regular fa-heart fa-lg heartIcon" title="Wishlist"></i></a>
+                    <a href="/cart"><img src="/img/icon/cart.png" title="Cart" alt=""><span>0</span></a>
+                    {{!-- <div class="price">$0.00</div> --}}
+                </div>
+            </div>
+        </div>
+        <div class="canvas__open"><i class="fa fa-bars"></i></div>
+    </div>
+</header>
+<!-- Header Section End -->
+
+<style>
+    .heartIcon{
+        color: black;
+        font-weight:500;
+    }
+
+    .heartIcon:hover{
+        color: rgb(255, 0, 0);
+        font-weight:800;
+    }
+</style>
+
