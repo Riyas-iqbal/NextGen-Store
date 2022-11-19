@@ -39,7 +39,7 @@
 
     <div class="col-md-3">
 
-      <div class="card p-3 mt-3" style="border-radius: 10px;">
+      <div class="card  p-3 mt-3" style="border-radius: 10px;">
         <div class="text-center">
           <a href="/"><img src="/images/nextgen logo black.svg" alt=""></a>
         </div>
@@ -51,18 +51,18 @@
         </div>
 
         <div>
-          <a href="/view-address" type="button" style="width: 100%;"
-            class="text-white btn p-2 badge btn-primary">Profile
+          <a  href="/view-address" type="button" style="width: 100%;"
+            class="text-white btn p-2 badge btn-primary ng-profile-hover">Profile
             <i class="fa-solid fa-user"></i></a>
         </div>
 
         <div class="d-flex justify-content-center mt-2 ">
-          <a href="/cart" type="button" style="width: 100%;" class="text-white btn p-2 badge btn-primary">Cart
+          <a href="/cart" type="button" style="width: 100%;" class="text-white btn p-2 badge btn-primary ng-profile-hover">Cart
             <i class="fa-solid fa-cart-shopping"></i></a>
         </div>
 
         <div class="d-flex justify-content-center mt-2 ">
-          <a href="/view-orders" type="button" style="width: 100%;" class="text-white btn p-2 badge btn-primary">My
+          <a href="/view-orders" type="button" style="width: 100%;" class="text-white btn p-2 badge btn-primary ng-profile-hover">My
             Orders
             <i class="fa-solid fa-list-check"></i></a>
         </div>
@@ -140,7 +140,7 @@
       {{!-- table Content start --}}
       {{#each order}}
       <a href="/view-order-products/{{this._id}}" style="all: unset; cursor: pointer;">
-        <div class="card mt-3" style="border-radius: 10px; background-color: #ffffff ;border: 0;">
+        <div class="card ng-card-hover mt-3">
           <div class="card-body row">
 
             <div class="align-self-center d-flex justify-content-center col-md-2">
@@ -303,8 +303,21 @@
     document.getElementById('advanced-view').style.display = 'block'
   }
 
-
-
-
-
 </script>
+
+<style>
+  .ng-card-hover {
+    border-radius: 10px;
+    background-color: #ffffff;
+    border: 0;  
+  }
+
+  .ng-card-hover:hover {
+    {{!-- background-color: #f0f0f0; --}}
+    transform: scale(1.005);
+  }
+
+  .ng-profile-hover:hover{
+    transform: scale(1.01);
+  }
+</style>
