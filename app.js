@@ -9,7 +9,7 @@ var session = require('express-session')
 var fileUpload = require('express-fileupload')
 const nocache = require("nocache");
 var flash = require('req-flash');
-
+require('dotenv').config()
 
 
 

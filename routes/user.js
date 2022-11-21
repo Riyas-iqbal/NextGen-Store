@@ -16,8 +16,8 @@ const paypal = require('paypal-rest-sdk');
 const { response } = require('express');
 paypal.configure({
     'mode': 'sandbox', //sandbox or live 
-    'client_id': 'AdR03qduMf90lhCwbxHHiPlxk1KAU82V95vX7D3nQARPtGCqLeg9w4ExFa-pKm_4UNMxIUW3lCGb3iGy', // please provide your client id here 
-    'client_secret': 'EKNkytc2FwRoxn7dPO7r71OoWy_pe_wzsM8JLHD2p9qS2TABPwCf_wrXgTy77_f4_ba-EsqCZ2ty966X' // provide your client secret here 
+    'client_id': process.env.PAYPAL_SANDBOX_CLIENT_ID , 
+    'client_secret': process.env.PAYPAL_SANDBOX_CLIENT_SECRET
 });
 
 
@@ -132,6 +132,7 @@ function CheckItemInWishlist(products,wishlist_products_Id) {
     }
     return products
   } catch (error) {
+    console.log('user has no wishlist')
     console.log(error)
   }
 }

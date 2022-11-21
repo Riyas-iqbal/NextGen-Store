@@ -9,9 +9,10 @@ const paypal = require('paypal-rest-sdk');
 //Razorpay integration
 const Razorpay = require('razorpay')
 const Razorpay_key_secret = process.env.RAZORPAY_KEY_SECRET
+let Razorpay_id = process.env.RAZORPAY_KEY_ID
 
 var instance = new Razorpay({
-    key_id: 'rzp_test_y6erlbfvrxarOP',
+    key_id: process.env.RAZORPAY_KEY_ID,
     key_secret: Razorpay_key_secret,
 });
 
@@ -44,7 +45,7 @@ module.exports = {
             let user = await db.get().collection(collection.USER_COLLECTION).findOne({ email: userData.email })
 
             if (user) {
-                bcrypt.compare(userData.password, user.password).then((status) => {
+                bcrypt.compare(userData.password,user.password).then((status) => {
                     if (status) {
                         console.log("User login Success");
                         response.user = user
