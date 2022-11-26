@@ -32,6 +32,7 @@ module.exports = {
                 }
             } else {
                 userData.password = await bcrypt.hash(userData.password, 10)
+                userData.isBlocked = false
                 db.get().collection(collection.USER_COLLECTION).insertOne(userData).then(resolve()).catch((err) => console.error(err))
             }
         })

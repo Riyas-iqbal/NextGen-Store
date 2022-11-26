@@ -66,7 +66,6 @@ router.get('/login', function(req, res) {
       removeFooter:true,
       userBlocked:req.flash('userBlocked'),
     });
-
     req.session.UserloginErr=false
   }
 });
