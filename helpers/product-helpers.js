@@ -261,7 +261,6 @@ module.exports={
         return new Promise((resolve,reject)=>{
             try {
                 db.get().collection(collection.BANNER_COLLECTION).findOne({}).then((response)=>{
-                    console.log(response)
                     resolve(response)
                 })   
             } catch (error) {

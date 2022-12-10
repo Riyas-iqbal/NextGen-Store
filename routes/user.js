@@ -5,7 +5,7 @@ const productHelpers=require('../helpers/product-helpers')
 const {uid}=require('uid')
 const objectId = require('mongodb').ObjectId
 
-//retrieving username, password and service id of twilio account stored in enviornment variable
+//retrieving username, password and service id of twilio account stored in envi
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const serviceId  = process.env.TWILIO_SERVICE_ID; 
@@ -39,9 +39,11 @@ const verifyLogin = (req, res, next) => {
 
 /* User Landing page. importing all products and latest products*/
 router.get('/',function (req, res) {
+
   productHelpers.findBanner().then((banner)=>{
     productHelpers.getAllProducts().then((products) => {
-      limit=3 //for latest products
+      limit=4 //for latest products
+      
       productHelpers.getLatestProducts(limit).then((newProducts) => {
         if (req.session.user) {
           let userlogin = req.session.user
@@ -50,16 +52,18 @@ router.get('/',function (req, res) {
           res.render('user/index', { user: true, products,banner, newProducts ,homeActive:true })
         }
       })
+    
     })
   })
+
 });
 
 /* user Login page. */
 router.get('/login', function(req, res) {
+
   if(req.session.user){
     res.redirect('/')
   }else{
-
     res.render('user/login',{
       "UserloginErr":req.session.UserloginErr,
       user:true,
@@ -68,36 +72,42 @@ router.get('/login', function(req, res) {
     });
     req.session.UserloginErr=false
   }
+
 });
 
 /*goto user Signup page. */
 router.get('/signup', function(req, res, next) {
-  if(req.session.user){
-    res.redirect('/')
-  }else{
+
+  if(req.session.user) res.redirect('/')
+
+  else{
+
     res.render('user/signup',{
       removeFooter:true,
       emailExist:req.flash('emailExist'),
       numberExist:req.flash('numberExist'),
     });
-  }    
+
+  }
+
 });
 
 /*POST Registering new user and redirecting back to login Page*/
 router.post('/user_registration',(req,res)=>{
+
   userHelpers.doSignup(req.body).then((userExist)=>{
-    
     if (userExist) {
-      if (userExist=='email') {
+
+      if (userExist=='email'){ 
         req.flash('emailExist','The Email you entered is already connected to another account please enter another Email id');
-      }else if (userExist=='phonenumber') {
+      } else if (userExist=='phonenumber'){ 
         req.flash('numberExist','The Phone number you entered is already connected to another account please enter another Phone number');
       }
       res.redirect('/signup')
-    } else {
-      res.redirect('/login')
-    }
+    
+    } else res.redirect('/login')
   })
+
 })
 
 /*POST goto Home Page After successful Login */
@@ -228,37 +238,39 @@ router.get('/add-to-cart-ajax/:id',verifyLogin,(req,res)=>{
   })
 })
 
-router.post('/change-product-quantity',verifyLogin,(req,res)=>{
-  userHelpers.changeProductQuantity(req.body).then(async(response)=>{
-     response.totalAmount=await userHelpers.getTotalAmount(req.body.user)
-     response.totalOne=await userHelpers.getTotalOfOneProduct(req.body.user,req.body.product)
+router.post('/change-product-quantity', verifyLogin, (req, res) => {
+  userHelpers.changeProductQuantity(req.body)
+    .then(async (response) => {
+      response.totalAmount = await userHelpers.getTotalAmount(req.body.user)
+      response.totalOne = await userHelpers.getTotalOfOneProduct(req.body.user, req.body.product)
       res.json(response)
-  })
+    })
 })
-router.post('/remove-item',(req,res)=>{
-  userHelpers.removeItem(req.body).then((response)=>{
+
+router.post('/remove-item', (req, res) => {
+  userHelpers.removeItem(req.body).then((response) => {
     res.json(response)
   })
 })
 
-router.get('/empty-cart',verifyLogin,(req,res)=>{
-  userHelpers.emptyCart(req.session.user._id).then(()=>{
+router.get('/empty-cart', verifyLogin, (req, res) => {
+  userHelpers.emptyCart(req.session.user._id).then(() => {
     res.redirect('/cart')
   })
 })
 
 //Place Order
 
-router.get('/place-order',verifyLogin,async(req,res)=>{
-  let products=await userHelpers.getCartProducts(req.session.user._id)
-  let totalAmount=await userHelpers.getTotalAmount(req.session.user._id)
+router.get('/place-order', verifyLogin, async (req, res) => {
+  let products = await userHelpers.getCartProducts(req.session.user._id)
+  let totalAmount = await userHelpers.getTotalAmount(req.session.user._id)
   let allAddress = await userHelpers.getAllAddress(req.session.user._id)
   let coupons = await userHelpers.getAllCoupons()
-  if(products){ 
-    res.render('user/userorder',{user,userlogin,products,totalAmount,allAddress,coupons})  
-  }else{
+  if (products) {
+    res.render('user/userorder', { user, userlogin, products, totalAmount, allAddress, coupons })
+  } else {
     res.redirect('/cart')
-  }  
+  }
 })
 
 router.post('/place-order', verifyLogin, async (req, res) => {
@@ -375,14 +387,14 @@ router.post('/verify-coupon', verifyLogin, (req, res) => {
 
 
 //verify razorpay payment status
-router.post('/verify-payment',verifyLogin,(req,res)=>{
-  userHelpers.verifyPayment(req.body).then(()=>{
-    userHelpers.changePaymentStatus(req.body['order[receipt]']).then(()=>{
+router.post('/verify-payment', verifyLogin, (req, res) => {
+  userHelpers.verifyPayment(req.body).then(() => {
+    userHelpers.changePaymentStatus(req.body['order[receipt]']).then(() => {
       console.log('payment success');
-      res.json({status:true})
+      res.json({ status: true })
     })
-  }).catch(()=>{
-    res.json({status:false})
+  }).catch(() => {
+    res.json({ status: false })
   })
 })
 

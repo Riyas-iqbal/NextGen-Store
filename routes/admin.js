@@ -391,10 +391,6 @@ router.get('/delete-coupon/:coupon_code', verifyLogin, (req, res) => {
 })
 
 
-
-
-
-
 //Admin logout
 router.get('/logout', function (req, res) {
     req.session.adminLogged = false
