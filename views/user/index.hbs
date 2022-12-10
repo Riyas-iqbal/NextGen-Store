@@ -31,7 +31,7 @@
                             <h6>{{banner.title1}}</h6>
                             <h2>{{banner.name1}}</h2>
                             <p>{{banner.description1}}</p>
-                            <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
+                            <a href="/explore" class="primary-btn">Shop now <span class="arrow_right"></span></a>
                             <div class="hero__social">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
                                 <a href="#"><i class="fa fa-twitter"></i></a>
@@ -71,10 +71,10 @@
     <div class="container" >
         <h2 class="fw-bold mb-5">New Products</h2>
         <div class="row">
-            <div class="col-lg-9" >
+            <div class="col-lg-12" >
                 <div class="row">
                     {{#each newProducts}}
-                    <div class="col-lg-4 col-md-6 col-sm-6" title="View {{this.name}}">
+                    <div class="col-lg-3 col-md-6 col-sm-6" title="View {{this.name}}">
                         <div class="product__item">
                             <div class="product__item__pic set-bg" style="cursor:pointer"
                                 onclick="document.location='/product-details?id={{this._id}}'"
@@ -285,13 +285,18 @@
         color: rgb(255, 0, 0);
     }
 
-    #messageScript{
+    #messageScript {
         display: none;
     }
 
-    #messageExist{
+    #messageExist {
         display: none;
     }
+
+    .set-bg {
+        background-repeat: no-repeat;
+        background-size: contain;
+    }   
 </style>
 
 {{!-- Alert Message showing that the selected Product was added to wishlist --}}
