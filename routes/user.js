@@ -29,6 +29,7 @@ const verifyLogin = (req, res, next) => {
     console.log("user is logged in");
       next()
   } else {
+      console.log('user not logged in')
       userLogin=false
       res.redirect('/login')
   }
@@ -569,11 +570,21 @@ router.get('/wishlist',verifyLogin,(req,res)=>{
   })
 })
 
-router.get('/add-to-wishlist/:id',verifyLogin,(req,res)=>{
-  userHelpers.addToWishlist(req.params.id,req.session.user._id).then((response)=>{
-    console.log(response)
-    res.json(response) 
-  })
+router.get('/add-to-wishlist/:id',(req,res)=>{
+  console.log('call received')
+
+  if (req.session.user) {
+    user=req.session.user
+    userlogin=user
+    userHelpers.addToWishlist(req.params.id,req.session.user._id).then((response)=>{
+      console.log(response)
+      res.json(response) 
+    })
+  } else {
+    console.log('user not logged in') 
+    response.isNotLoggedIn=true
+    res.json(response)
+  }
 })
 
 router.get('/remove-from-wishlist/:productId',verifyLogin,(req,res)=>{

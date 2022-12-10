@@ -284,6 +284,14 @@
     .color-red {
         color: rgb(255, 0, 0);
     }
+
+    #messageScript{
+        display: none;
+    }
+
+    #messageExist{
+        display: none;
+    }
 </style>
 
 {{!-- Alert Message showing that the selected Product was added to wishlist --}}
@@ -294,26 +302,52 @@
             url: `/add-to-wishlist/${productId}`,
             method: 'get',
             success: (response) => {
-                if (response.exist) {
-                    $('#messageExist').addClass('show')
-                    setTimeout(() => {
-                        $('#messageExist').removeClass('show')
-                    }, 2000)
+
+                if (response.isNotLoggedIn) {
+                    console.log('user not logged in')
+                    window.location.href = "/login";
                 } else {
-                    $('#messageScript').addClass('show')
-                    $('#wishlistIcon' + productId).addClass('color-red')
-                    setTimeout(() => {
-                        $('#messageScript').removeClass('show')
-                    }, 2000)
+                    console.log('user logged in')
+                    if (response.exist) {
+                        $('#messageExist').show()
+                        $('#messageExist').addClass('show')
+                        setTimeout(() => {
+                            $('#messageExist').removeClass('show')
+
+                            setTimeout(()=>{
+                                $('#messageExist').hide()
+                            },1000)
+                            
+                        }, 2000)
+                        
+                    } else {
+
+                        $('#messageScript').show()
+                        $('#messageScript').addClass('show')
+                        $('#wishlistIcon' + productId).addClass('color-red')
+                        setTimeout(() => {
+
+                            $('#messageScript').removeClass('show')
+
+                            setTimeout(() => {
+                                $('#messageScript').hide()
+                            },1000)
+
+                        }, 2000)
+
+                    }
+
                 }
             }
         })
     }
 </script>
+
+
 {{!-- function to change price(string) to thousands separator format ( 125000 => ₹1,25,000 ) by fetching the element
 using class which will return an array --}}
 <script>
-    // window.addEventListener('load', (event) => {
+
     console.log('page is fully loaded');
     var price = document.getElementsByClassName("priceofproduct")
     for (let i = 0; i < price.length; i++) {
@@ -321,5 +355,4 @@ using class which will return an array --}}
         tempPrice = `₹${tempPrice.toLocaleString('hi')}`
         price[i].innerHTML = tempPrice
     }
-   // });
 </script>
