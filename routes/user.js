@@ -594,6 +594,36 @@ router.get('/remove-from-wishlist/:productId',verifyLogin,(req,res)=>{
   })
 })
 
+//-------------Search----------------//
+
+router.get('/explore/search/',verifyLogin,(req,res)=>{
+
+  let product_name = req.query.search
+
+  productHelpers.getSearchProducts(product_name)
+    .then((products) => {
+    
+    productHelpers.getAllCategory()
+      .then((category) => {
+        
+        userHelpers.getWishlistProductsId(req.session.user._id)
+          .then((wishlist_products_Id) => {
+
+        CheckItemInWishlist(products,wishlist_products_Id)
+
+        res.render('user/explore',
+          {
+            user: true,
+            userlogin,
+            category,
+            products,
+            exploreActive: true
+          })
+      })
+    })
+  })
+
+})
 
 
 

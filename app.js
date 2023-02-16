@@ -54,10 +54,10 @@ db.connect((err )=>{
 app.use('/', userRouter);
 app.use('/admin', adminRouter);
 
-//redirecting all Error Requests to a Custom Error page 
-// app.get('*',(req,res)=>{
-//   res.render('404',{error:true})
-// })
+// redirecting all Error Requests to a Custom Error page 
+app.get('*',(req,res)=>{
+  res.render('404',{error:true})
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -34,10 +34,17 @@ module.exports={
     },
     getProductDetails:(productId)=>{
         return new Promise((resolve,reject)=>{
-            db.get().collection(collection.PRODUCT_COLLECTION).findOne({_id:objectId(productId)}).then((product)=>{
-                console.log(product);
-                resolve(product)
-            })
+            try {
+                db.get().collection(collection.PRODUCT_COLLECTION).findOne({_id:objectId(productId)}).then((product)=>{
+                    console.log(product);
+                    resolve(product)
+                })
+            } catch (error) {
+                console.log(productId)
+                console.log('Product id received is not valid',productId)
+                console.log(error)
+                
+            }
         })
     },
     updateProduct:(productId,productDetails)=>{
@@ -267,6 +274,21 @@ module.exports={
                 console.log('Error Happened In Find Banner')
                 console.log(error)
             } 
+        })
+    },
+
+    getSearchProducts:(name)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.PRODUCT_COLLECTION).findOne({ name: { $regex : name , $options: 'i' } })
+                .then((products)=>{
+
+                    console.log(products)
+
+                    resolve(products)
+                })
+                .catch((e)=>{
+                    console.log(e)
+                })
         })
     }
 
