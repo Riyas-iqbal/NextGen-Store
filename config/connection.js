@@ -6,14 +6,14 @@ const state={
 module.exports.connect=((done)=>{
 
     // local db connection
-    const url='mongodb://localhost:27017'
+    // const url='mongodb://localhost:27017'
     
     // Atlas Db Connection 
 
     //change mongodb password to env
     
 
-    // const url = process.env.MONGODB_ATLAS
+    const url = process.env.MONGODB_ATLAS
 
     const dbname='nextgen'
     MongoClient.connect(url,(err,data)=>{

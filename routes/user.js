@@ -41,6 +41,10 @@ const verifyLogin = (req, res, next) => {
 /* User Landing page. importing all products and latest products*/
 router.get('/',function (req, res) {
 
+  const visitorIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress; //retrieve the IP address of visitor
+  console.log('\n\nSite Accessed\n')
+  console.log(visitorIp+'\n');
+
   productHelpers.findBanner().then((banner)=>{
     productHelpers.getAllProducts().then((products) => {
       limit=4 //for latest products
