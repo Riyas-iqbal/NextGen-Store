@@ -1,7 +1,5 @@
-<div align='center'>
-  # NextGen-Store 
-<div/>
 
+  # NextGen-Store 
 
 ## Table of contents
 
